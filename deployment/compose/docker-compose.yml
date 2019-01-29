@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  broker-mqtt-driver:
+    image: eclipse-mosquitto
+    ports:
+      - "9001:9001"
+      - "1883:1883"
+    volumes:
+      - broker-mqtt-data-TPI-driver:/mosquitto/data            
+  store-mongo-driver:
+    image: mongo:4
+    ports:
+      - "27017:27017"
+    environment: 
+        - storageEngine=wiredTiger
+    volumes: 
+      - store-mongo-db-TPI-driver:/data/db
+  keycloak-mysql-driver:
+     image: mysql:5.6
+     ports:
+       - "3306:3306"
+     environment:
+         - MYSQL_ROOT_PASSWORD=keycloak
+         - MYSQL_DATABASE=keycloak
+         - MYSQL_USER=keycloak
+         - MYSQL_PASSWORD=keycloak
+     volumes:
+       - keycloak-mysql-data-TPI-driver:/var/lib/mysql
+  keycloak-driver:
+       image: nebulaetpi/keycloak:latest
+       environment:
+         - MYSQL_ADDR=keycloak-mysql-driver
+         - MYSQL_PORT_3306_TCP_ADDR=keycloak-mysql-driver
+         - MYSQL_PORT_3306_TCP_PORT=3306
+         - KEYCLOAK_USER=keycloak
+         - KEYCLOAK_PASSWORD=keycloak
+         - MYSQL_DATABASE=keycloak
+         - MYSQL_USER=keycloak
+         - MYSQL_PASSWORD=keycloak
+         - SERVICE_PORTS=8080
+       ports:
+         - 8443:8443
+         - 8080:8080
+         - 9990:9990
+       volumes:
+         - keycloak-data-TPI-driver:/opt/jboss/keycloak/standalone/data      
+       depends_on: 
+         - keycloak-mysql-driver
+volumes: 
+  store-mongo-db-TPI-driver:
+  broker-mqtt-data-TPI-driver:
+  keycloak-mysql-data-TPI-driver:
+  keycloak-data-TPI-driver:

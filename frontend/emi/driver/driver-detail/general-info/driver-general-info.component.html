@@ -1,0 +1,128 @@
+<div class="tab-content p-24" fxLayout="column" fusePerfectScrollbar>
+
+    <form name="driverGeneralInfoForm" [formGroup]="driverGeneralInfoForm"  fxLayout="row wrap" class="mat-white-bg p-24 mr-24 mb-24">
+
+      <div fxFlex="100" fxLayout.gt-xs="row" fxLayout="column" fxLayoutAlign.gt-xs="space-around start" fxLayoutAlign="center start">
+        <div fxFlex.gt-xs="100" fxFlex="100" class="h2">{{'DRIVER.DETAILS.GENERAL_INFO' | translate}}</div>
+        <form *ngIf="driverStateForm" fxFlex="50" fxFlex.gt-xs="50" name="driverStateForm" [formGroup]="driverStateForm" fxLayoutAlign="end center">
+          <mat-slide-toggle formControlName="state" color="accent" (change)="onDriverStateChange($event)">
+            <label *ngIf="driverStateForm.controls['state'].value">{{'DRIVER.DETAILS.ENABLED' | translate}}</label>
+            <label *ngIf="!driverStateForm.controls['state'].value">{{'DRIVER.DETAILS.DISABLED' | translate}}</label>
+          </mat-slide-toggle>
+        </form>
+      </div>
+
+       <!-- DOCUMENT TYPE -->
+       <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+        <mat-select name="documentType" formControlName="documentType" placeholder="{{'DRIVER.DETAILS.DOCUMENT_TYPE' | translate}}">
+          <mat-option *ngFor="let docType of documentTypes" [value]="docType">
+            {{ 'DRIVER.DETAILS.DOCUMENT_TYPES.'+ docType | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['documentType'])">
+          {{'DRIVER.DETAILS.DOCUMENT_TYPE_REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <!-- DOCUMENT TYPE -->
+
+      <!-- DRIVER DOCUMENT -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+        <input matInput name="document" formControlName="document" maxlength="15" placeholder="{{'DRIVER.DETAILS.DOCUMENT' | translate}}">
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['document'])">
+          {{'DRIVER.DETAILS.DOCUMENT_REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <!-- DRIVER DOCUMENT -->
+
+      <!-- DRIVER NAME -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+        <input matInput name="name" formControlName="name" maxlength="15" placeholder="{{'DRIVER.DETAILS.NAME' | translate}}">
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['name'])">
+          {{'DRIVER.DETAILS.NAME_REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <!-- DRIVER NAME -->
+
+      <!-- DRIVER LASTNAME -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+        <input matInput name="lastname" formControlName="lastname" maxlength="15" placeholder="{{'DRIVER.DETAILS.LASTNAME' | translate}}">
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['lastname'])">
+          {{'DRIVER.DETAILS.LASTNAME_REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <!-- DRIVER LASTNAME -->
+
+      <!-- DRIVER EMAIL -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+        <input matInput name="email" formControlName="email" maxlength="50" placeholder="{{'DRIVER.DETAILS.EMAIL' | translate}}">
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['email'])">
+          {{'DRIVER.DETAILS.EMAIL_REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('pattern', ['email'])">
+          {{'DRIVER.DETAILS.EMAIL_FORMAT' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <!-- DRIVER EMAIL -->
+
+      <!-- DRIVER CONTACT PHONE -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+        <input matInput name="phone" formControlName="phone" maxlength="15" placeholder="{{'DRIVER.DETAILS.PHONE' | translate}}">
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['phone'])">
+          {{'DRIVER.DETAILS.PHONE_REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <!-- DRIVER CONTACT PHONE -->
+
+      <!-- DOCUMENT TYPE -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+        <mat-select name="gender" formControlName="gender" placeholder="{{'DRIVER.DETAILS.GENDER' | translate}}">
+          <mat-option *ngFor="let gender of genders" [value]="gender">
+            {{ 'DRIVER.DETAILS.GENDER_'+ gender | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['gender'])">
+          {{'DRIVER.DETAILS.GENDER_REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <!-- DOCUMENT TYPE -->
+
+      <div fxFlex="100" fxLayout="row wrap">
+        <!--  PMR STATE -->
+        <div style="margin-bottom: 10px" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="h2">
+          {{'DRIVER.DETAILS.PMR_TITLE' | translate}}
+          <section fxFlex.gt-xs="50" fxFlex="100" class="example-section">
+            <mat-checkbox name="pmr" formControlName="pmr">{{'DRIVER.DETAILS.PMR' | translate}}</mat-checkbox>
+          </section>
+        </div>
+        <!--  PMR STATE -->
+      
+        <!-- LANGUAGES -->
+        <div fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="h2">
+          {{'DRIVER.DETAILS.LANGUAGES_TITLE' | translate}}
+          <section class="languages-section">
+            <div formArrayName="languages" *ngFor="let language of driverGeneralInfoForm.controls['languages'].controls; let i = index;">
+              <div [formGroupName]="i">
+                <mat-checkbox [formControlName]="'active'">{{'DRIVER.DETAILS.LANGUAGES.' + language.get('name').value |
+                  translate}}</mat-checkbox>
+              </div>
+            </div>
+          </section>
+        </div>
+        <!-- LANGUAGES -->
+      </div>
+      
+
+      <div class="mt-16">
+        <button mat-raised-button *ngIf="pageType === 'new'" (click)="createDriver()"
+          [disabled]="driverGeneralInfoForm.invalid || driverGeneralInfoForm.pristine">
+          {{'DRIVER.CREATE' | translate}}
+        </button>
+        <button mat-raised-button *ngIf="pageType === 'edit'" (click)="updateDriverGeneralInfo()"
+          [disabled]="driverGeneralInfoForm.invalid || driverGeneralInfoForm.pristine">
+          {{'DRIVER.UPDATE' | translate}}
+        </button>
+      </div>
+
+    </form>
+
+</div>

@@ -1,0 +1,8 @@
+[
+    {
+        "name": "driver",
+        "type": "graphql",        
+        "src": "api/emi-gateway/graphql/driver",
+        "preBuildCommands": []
+    }
+]

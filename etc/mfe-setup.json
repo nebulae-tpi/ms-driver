@@ -1,0 +1,50 @@
+[
+    {
+        "name": "driver",
+        "src": "frontend/emi/driver",
+        "groups": [
+            {
+            "id": "BUSINESS_UNIT_MANAGER",
+            "icon": "location_searching",
+            "translate": {
+                "en": "Business units",
+                "es": "Unidades de negocio"
+            },
+            "priority": 200
+            }
+          ],
+        "subgroups": [
+            {
+                "groupId": "BUSINESS_UNIT_MANAGER",
+                "id": "management",
+                "icon": "settings",
+                "translate": {
+                    "en": "Management",
+                    "es": "Gestión"
+                },
+                "priority": 2000
+            }
+        ],
+        "contents": [
+            {
+                "id": "driver-management",
+                "groupId": "BUSINESS_UNIT_MANAGER",
+                "subgroupId": "management",
+                "icon": "airline_seat_recline_normal",
+                "translate": {
+                    "en": "Driver",
+                    "es": "Conductor"
+                },
+                "navURL": "/driver",
+                "path": "driver",
+                "loadChildren": "./main/content/driver/driver.module#DriverModule",
+                "priority": 1000,
+                "roles" : ["PLATFORM-ADMIN", "BUSINESS-OWNER"],
+                "default" : false
+            }            
+        ],
+        "preBuildCommands": [],
+        "environmentVars": {
+        }
+    }
+]
