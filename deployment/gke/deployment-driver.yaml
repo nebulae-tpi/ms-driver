@@ -58,7 +58,7 @@ spec:
           value: "initial_lock"
         # KEYCLOAK BACKEND
         - name: KEYCLOAK_BACKEND_BASE_URL
-          value: "https://iot.nebulae.com.co/auth"
+          value: "https://tpi-dev.nebulae.com.co/auth"
         - name: KEYCLOAK_BACKEND_USER
           valueFrom:
             secretKeyRef:
