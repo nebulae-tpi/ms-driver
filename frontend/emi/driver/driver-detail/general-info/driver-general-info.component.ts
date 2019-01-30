@@ -283,7 +283,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
           messageKey ? data[messageKey] : '',
           detailMessageKey ? data[detailMessageKey] : '',
           {
-            duration: 2000
+            duration: 4000
           }
         );
       });
