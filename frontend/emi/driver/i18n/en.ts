@@ -4,7 +4,7 @@ export const locale = {
     DRIVER: {
       DETAIL_HEADER_NAME: 'Driver',
       DETAIL_HEADER_NEW: 'New Driver',
-      TITLE: 'Driver',
+      TITLE: 'Drivers',
       FILTER: 'Filter',
       NAME: 'Name',
       CREATION_DATE: 'Creation date',
@@ -49,6 +49,7 @@ export const locale = {
         PHONE_REQUIRED: 'Phone required',
         EMAIL_FORMAT: 'Invalid email format',
         MEMBERSHIP_STATE: 'Membership state',
+        GENDER_REQUIRED: 'Gender required',
         USERNAME: 'Username',
         NEW_PASSWORD: 'New passowrd',
         PASSWORD_CONFIRMATION: 'Confirm new passowrd',
@@ -62,6 +63,10 @@ export const locale = {
         PASSWORD_CONFIRMATION_REQUIRED: 'Confirm passowrd required',
         NOT_EQUIVALENT_PASSWORD: 'The verification password does not match.',
         REMOVE_USER_AUTH: 'Remove auth credential',
+        LANGUAGES_TITLE: 'Other languages',
+        LANGUAGES: {
+          english: 'English'
+        }   
       },
       BLOCKS: {
         KEY: 'Block',
@@ -69,7 +74,7 @@ export const locale = {
         START_TIME: 'Start date',
         END_TIME: 'Expiration date',
         ACTIONS: 'Actions',
-        USER: 'User'
+        USER: 'responsible'
       },
       ACTIVE: 'Active',
       CREATE: 'Create',
@@ -80,8 +85,8 @@ export const locale = {
       CREATE_TITLE: 'Creation',
       CREATE_MESSAGE: '¿Are you sure you want to make the creation?',
       CANCEL: 'Cancel',
-      ENTITY_UPDATED: 'Element updated',
-      ENTITY_CREATED: 'Element created',
+      ENTITY_UPDATED: 'Driver updated',
+      ENTITY_CREATED: 'Driver created',
       CLOSE: 'Close',
       WAIT_OPERATION: 'Operation in process, in case of not receiving an answer, verify if the changes made were applied successfully.',
       SELECT_BUSINESS: 'You must select a business unit before performing the creation.',

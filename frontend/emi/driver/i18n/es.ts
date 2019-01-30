@@ -49,6 +49,7 @@ export const locale = {
         PHONE_REQUIRED: 'Teléfono requerido',
         EMAIL_FORMAT: 'Formato de email inválido',
         MEMBERSHIP_STATE: 'Estado de la membresía',
+        GENDER_REQUIRED: 'Género requerido',
         USERNAME: 'Nombre de usuario',
         NEW_PASSWORD: 'Nueva contraseña',
         PASSWORD_CONFIRMATION: 'Confirmar nueva contraseña',
@@ -64,16 +65,16 @@ export const locale = {
         REMOVE_USER_AUTH: 'Eliminar credenciales de usuario',
         LANGUAGES_TITLE: 'Otros idiomas',
         LANGUAGES: {
-          english: 'Ingles'
+          english: 'Inglés'
         }   
       },
       BLOCKS: {
         KEY: 'Bloqueo',
         NOTES: 'Notas',
         START_TIME: 'Fecha de inicio',
-        END_TIME: 'FEcha de expiración',
+        END_TIME: 'Fecha de expiración',
         ACTIONS: 'Acciones',
-        USER: 'Usuario'
+        USER: 'Responsable'
       },
       ACTIVE: 'Activo',
       CREATE: 'Crear',
@@ -84,8 +85,8 @@ export const locale = {
       CREATE_TITLE: 'Creación',
       CREATE_MESSAGE: '¿Estás seguro que desea realizar la creación?',
       CANCEL: 'Cancelar',
-      ENTITY_UPDATED: 'Elemento actualizado',
-      ENTITY_CREATED: 'Elemento creado',
+      ENTITY_UPDATED: 'Conductor actualizado',
+      ENTITY_CREATED: 'Conductor creado',
       CLOSE: 'Cerrar',
       WAIT_OPERATION: 'Operación en proceso, en caso de no recibir respuesta, verificar si los cambios realizados fueron aplicados exitosamente.',
       SELECT_BUSINESS: 'Debe seleccionar una unidad de negocio antes de realizar la creación.',
