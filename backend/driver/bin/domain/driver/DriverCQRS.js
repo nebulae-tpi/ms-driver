@@ -168,7 +168,8 @@ class DriverCQRS {
       mergeMap(roles => 
         DriverDA.getDriver$(driver._id)
         .pipe(
-          mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverValidator$(driver, authToken, roles, userMongo))
+          mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverValidator$(driver, authToken, roles, userMongo)),
+          mergeMap(data => DriverKeycloakDA.updateUserGeneralInfo$(data.userMongo.auth.userKeycloakId, data.driver.generalInfo).pipe(mapTo(data)))
         )              
       ),
       mergeMap(data => eventSourcing.eventStore.emitEvent$(
@@ -208,7 +209,11 @@ class DriverCQRS {
     ).pipe(
       mergeMap(roles => 
         DriverDA.getDriver$(driver._id)
-        .pipe( mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverStateValidator$(driver, authToken, roles, userMongo)))
+        .pipe(
+          mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverStateValidator$(driver, authToken, roles, userMongo)),
+          // Update the state of the user on Keycloak
+          mergeMap(data => DriverKeycloakDA.updateUserState$(data.userMongo.auth.userKeycloakId, data.driver.state).pipe(mapTo(data)))
+        )
       ),
       mergeMap(data => eventSourcing.eventStore.emitEvent$(
         new Event({

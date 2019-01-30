@@ -136,7 +136,7 @@ class DriverValidatorHelper {
 
 
   static checkIfUserIsTheSameUserLogged(user, authToken) {
-    if (user._id == authToken.sub) {
+    if (user && user.auth && user.auth.userKeycloakId == authToken.sub) {
       return this.throwCustomError$(USER_UPDATE_OWN_INFO_ERROR_CODE);
     }
   }
