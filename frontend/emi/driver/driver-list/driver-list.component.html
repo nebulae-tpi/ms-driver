@@ -88,17 +88,13 @@
           <ng-container cdkColumnDef="name">
             <mat-header-cell *cdkHeaderCellDef>{{ "DRIVER.NAME" | translate }}</mat-header-cell>
             <mat-cell *cdkCellDef="let element">
-              <p class="text-truncate">
-                {{ element.generalInfo.name }}
-              </p>
+              <p class="text-truncate">{{ element.generalInfo.name }}</p>
             </mat-cell>
           </ng-container>
 
           <!-- Active Column -->
           <ng-container cdkColumnDef="state">
-            <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{
-              "DRIVER.ACTIVE" | translate
-              }}</mat-header-cell>
+            <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{"DRIVER.ACTIVE" | translate}}</mat-header-cell>
             <mat-cell *cdkCellDef="let element" fxHide fxShow.gt-xs>
               <mat-icon *ngIf="element.state" class="active-icon mat-green-600-bg s-16">check</mat-icon>
               <mat-icon *ngIf="!element.state" class="active-icon mat-red-500-bg s-16">close</mat-icon>
@@ -107,9 +103,7 @@
 
           <!-- Creation timestamp Column -->
           <ng-container cdkColumnDef="creationTimestamp">
-              <mat-header-cell *cdkHeaderCellDef>{{
-                "DRIVER.CREATION_TIMESTAMP" | translate
-              }}</mat-header-cell>
+              <mat-header-cell *cdkHeaderCellDef>{{"DRIVER.CREATION_TIMESTAMP" | translate}}</mat-header-cell>
               <mat-cell *cdkCellDef="let element">
                 <p class="text-truncate">
                   {{ element.creationTimestamp | date: "dd/MM/y HH:mm:ss" }}
@@ -119,9 +113,7 @@
 
           <!-- Creator user Column -->
           <ng-container cdkColumnDef="creatorUser">
-              <mat-header-cell *cdkHeaderCellDef>{{
-                "DRIVER.CREATOR_USER" | translate
-              }}</mat-header-cell>
+              <mat-header-cell *cdkHeaderCellDef>{{"DRIVER.CREATOR_USER" | translate}}</mat-header-cell>
               <mat-cell *cdkCellDef="let element">
                 <p class="text-truncate">{{  element.creatorUser }}</p>
               </mat-cell>
@@ -129,9 +121,7 @@
 
           <!-- Last modification timestamp Column -->
           <ng-container cdkColumnDef="modificationTimestamp">
-              <mat-header-cell *cdkHeaderCellDef>{{
-                "DRIVER.LAST_MODIFICATION_TIMESTAMP" | translate
-              }}</mat-header-cell>
+              <mat-header-cell *cdkHeaderCellDef>{{"DRIVER.LAST_MODIFICATION_TIMESTAMP" | translate}}</mat-header-cell>
               <mat-cell *cdkCellDef="let element">
                 <p class="text-truncate">
                   {{ element.modificationTimestamp | date: "dd/MM/y HH:mm:ss" }}
@@ -141,9 +131,7 @@
 
           <!-- Modifier user Column -->
           <ng-container cdkColumnDef="modifierUser">
-              <mat-header-cell *cdkHeaderCellDef>{{
-                "DRIVER.MODIFIER_USER" | translate
-              }}</mat-header-cell>
+              <mat-header-cell *cdkHeaderCellDef>{{"DRIVER.MODIFIER_USER" | translate}}</mat-header-cell>
               <mat-cell *cdkCellDef="let element">
                 <p class="text-truncate">{{  element.modifierUser }}</p>
               </mat-cell>
