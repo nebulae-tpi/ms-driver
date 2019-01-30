@@ -22,7 +22,6 @@ class DriverBlocksDA {
 
 
   static findBlocksByDriver$(driverId) {
-    console.log("findBlocksByDriver$", driverId);
     const collection = mongoDB.db.collection(CollectionName);
     const query = {
       driverId: driverId

@@ -82,7 +82,6 @@ class DriverValidatorHelper {
   static checkDriverCreateDriverAuthValidator$(driver, authToken, roles, userMongo) {
     return of({driver, authToken, roles, userMongo: userMongo})
     .pipe(
-      tap(data => console.log('Data =======> ', data)),
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => { if (!data.authInput || !data.authInput.username.trim().match(userNameRegex)) this.throwCustomError$(INVALID_USERNAME_FORMAT_ERROR_CODE)}),
       tap(data => { if (!data.userMongo) this.throwCustomError$(USER_NOT_FOUND_ERROR_CODE)}),

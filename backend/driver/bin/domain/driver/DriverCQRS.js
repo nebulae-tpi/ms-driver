@@ -147,7 +147,7 @@ class DriverCQRS {
     );
   }
 
-    /**
+  /**
    * Edit the driver state
    */
   updateDriverGeneralInfo$({ root, args, jwt }, authToken) {
@@ -235,7 +235,6 @@ class DriverCQRS {
    * Create the driver auth
    */
   createDriverAuth$({ root, args, jwt }, authToken) {
-    console.log('createDriverAuth');
     const driver = {
       _id: args.id,
       authInput: args.input,
@@ -396,7 +395,6 @@ class DriverCQRS {
       modifierUser: authToken.preferred_username,
       modificationTimestamp: new Date().getTime()
     };
-    console.log('updateDriverMembershipState CQRS ', args);
     return RoleValidator.checkPermissions$(
       authToken.realm_access.roles,
       "Driver",
