@@ -103,7 +103,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
       email: new FormControl(this.driver ? (this.driver.generalInfo || {}).email : '', [Validators.required, Validators.email]),
       phone: new FormControl(this.driver ? (this.driver.generalInfo || {}).phone : '', [Validators.required]),
       gender: new FormControl(this.driver ? (this.driver.generalInfo || {}).gender : '', [Validators.required]),
-      pmr: new FormControl(this.driver ? (this.driver.generalInfo || {}).pmr : false, [Validators.required]),
+      pmr: new FormControl(this.driver ? (this.driver.generalInfo || {}).pmr : false),
       languages: new FormArray([
         new FormGroup({
           name: new FormControl('english'),

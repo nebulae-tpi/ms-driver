@@ -105,7 +105,6 @@ class DriverES {
     }
 
     handleDriverBlockRemoved$(driverBlockRemovedEvt){
-        console.log('############### handleDriverBlockRemoved', driverBlockRemovedEvt);
         return of(driverBlockRemovedEvt)
         .pipe(
             map(() => ({driverId: driverBlockRemovedEvt.aid, blockKey: driverBlockRemovedEvt.data.blockKey }) ),
@@ -116,7 +115,6 @@ class DriverES {
     }
 
     handleCleanExpiredDriverBlocks$(DriverBlockRemovedEvt){
-        console.log('############### handleCleanExpiredBlocks$', DriverBlockRemovedEvt);
         return DriverBlocksDA.removeExpiredBlocks$(DriverBlockRemovedEvt.timestamp);
     }
 

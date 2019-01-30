@@ -36,7 +36,7 @@
 
       <!-- DRIVER NAME -->
       <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
-        <input matInput name="name" formControlName="name" maxlength="15" placeholder="{{'DRIVER.DETAILS.NAME' | translate}}">
+        <input matInput name="name" formControlName="name" maxlength="20" placeholder="{{'DRIVER.DETAILS.NAME' | translate}}">
         <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['name'])">
           {{'DRIVER.DETAILS.NAME_REQUIRED' | translate}}
         </mat-error>
@@ -45,7 +45,7 @@
 
       <!-- DRIVER LASTNAME -->
       <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
-        <input matInput name="lastname" formControlName="lastname" maxlength="15" placeholder="{{'DRIVER.DETAILS.LASTNAME' | translate}}">
+        <input matInput name="lastname" formControlName="lastname" maxlength="20" placeholder="{{'DRIVER.DETAILS.LASTNAME' | translate}}">
         <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['lastname'])">
           {{'DRIVER.DETAILS.LASTNAME_REQUIRED' | translate}}
         </mat-error>
@@ -58,7 +58,7 @@
         <mat-error *ngIf="driverGeneralInfoForm.hasError('required', ['email'])">
           {{'DRIVER.DETAILS.EMAIL_REQUIRED' | translate}}
         </mat-error>
-        <mat-error *ngIf="driverGeneralInfoForm.hasError('pattern', ['email'])">
+        <mat-error *ngIf="driverGeneralInfoForm.hasError('email', ['email'])">
           {{'DRIVER.DETAILS.EMAIL_FORMAT' | translate}}
         </mat-error>
       </mat-form-field>

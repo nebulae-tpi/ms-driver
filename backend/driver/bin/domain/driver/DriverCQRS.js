@@ -419,9 +419,7 @@ class DriverCQRS {
     );
   }
 
-  getDriverBlocks$({ root, args, jwt }, authToken) { 
-    console.log(args);
-
+  getDriverBlocks$({ root, args, jwt }, authToken) {
     return RoleValidator.checkPermissions$(
       authToken.realm_access.roles,
       "driverBlocks",

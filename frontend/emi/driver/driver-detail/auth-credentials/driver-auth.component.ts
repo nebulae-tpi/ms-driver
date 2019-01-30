@@ -120,7 +120,7 @@ export class DriverAuthComponent implements OnInit, OnDestroy {
           ])
         ],
         passwordConfirmation: ['', Validators.required],
-        temporary: [false, Validators.required]
+        temporary: [true, Validators.required]
       },
       {
         validator: this.checkIfMatchingPasswords(

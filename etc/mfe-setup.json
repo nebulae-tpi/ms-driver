@@ -32,8 +32,8 @@
                 "subgroupId": "management",
                 "icon": "airline_seat_recline_normal",
                 "translate": {
-                    "en": "Driver",
-                    "es": "Conductor"
+                    "en": "Drivers",
+                    "es": "Conductores"
                 },
                 "navURL": "/driver",
                 "path": "driver",
