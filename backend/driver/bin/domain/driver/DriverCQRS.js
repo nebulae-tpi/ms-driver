@@ -397,7 +397,7 @@ class DriverCQRS {
       "Driver",
       "updateDriverMembershipState$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
     ).pipe(
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -424,7 +424,7 @@ class DriverCQRS {
       "driverBlocks",
       "getDriverBlocks$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
     ).pipe(
       // map(() => [{
       //   key: 'PICO_Y_PLACA',
@@ -446,7 +446,7 @@ class DriverCQRS {
       "driverBlock",
       "removeDriverBlock$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
     ).pipe(
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
