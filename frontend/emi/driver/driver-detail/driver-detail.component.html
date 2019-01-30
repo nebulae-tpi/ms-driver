@@ -44,9 +44,9 @@
             <driver-general-info [pageType]="pageType" [driver]="driver" *ngIf="pageType">
             </driver-general-info>
           </mat-tab>
-          <mat-tab *ngIf="pageType && pageType == 'edit'" label="{{'DRIVER.DETAILS.TABS.MEMBERSHIP' | translate}}">
+          <!-- <mat-tab *ngIf="pageType && pageType == 'edit'" label="{{'DRIVER.DETAILS.TABS.MEMBERSHIP' | translate}}">
               <driver-membership [driver]="driver"></driver-membership>
-          </mat-tab>
+          </mat-tab> -->
           <mat-tab  *ngIf="pageType && pageType == 'edit'" label="{{'DRIVER.DETAILS.TABS.CREDENTIALS' | translate}}">
             <driver-auth [driver]="driver"></driver-auth>
           </mat-tab>
