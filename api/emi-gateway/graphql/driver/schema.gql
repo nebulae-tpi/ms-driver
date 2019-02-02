@@ -150,7 +150,7 @@ type DriverDriverBlock {
 }
 
 type Query {
-  "Get Drivers filtered "
+  "Get Drivers filtered"
   DriverDrivers(filterInput: DriverDriverFilterInput!, paginationInput: PaginationInput!): [DriverDriver]
   "Get the amount of Drivers filtered "
   DriverDriversSize(filterInput: DriverDriverFilterInput!): Int!
