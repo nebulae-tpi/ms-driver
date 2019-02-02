@@ -92,6 +92,7 @@ class DriverKeycloakDA {
   static createUser$(user, authInput) { 
     const attributes = {};
     attributes["businessId"] = user.businessId;
+    attributes["driverId"] = user._id;
     
 
     const userKeycloak = {
