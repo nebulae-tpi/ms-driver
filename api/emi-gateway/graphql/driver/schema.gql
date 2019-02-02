@@ -66,7 +66,7 @@ type DriverLanguages {
   active: Boolean!
 }
 
-input FilterInput {
+input DriverDriverFilterInput {
   "ID of the business"
   businessId: String
   "Name"
@@ -151,9 +151,9 @@ type DriverDriverBlock {
 
 type Query {
   "Get Drivers filtered "
-  DriverDrivers(filterInput: FilterInput!, paginationInput: PaginationInput!): [DriverDriver]
+  DriverDrivers(filterInput: DriverDriverFilterInput!, paginationInput: PaginationInput!): [DriverDriver]
   "Get the amount of Drivers filtered "
-  DriverDriversSize(filterInput: FilterInput!): Int!
+  DriverDriversSize(filterInput: DriverDriverFilterInput!): Int!
   "Get Driver by its id"
   DriverDriver(id: String!): DriverDriver
   "get the Blocks of the related Driver"
