@@ -81,7 +81,7 @@ input DriverDriverFilterInput {
   creationTimestamp: BigInt
 }
 
-input PaginationInput {
+input DriverDriverPaginationInput {
   "Page"
   page: Int!
   "Count"
@@ -151,7 +151,7 @@ type DriverDriverBlock {
 
 type Query {
   "Get Drivers filtered"
-  DriverDrivers(filterInput: DriverDriverFilterInput!, paginationInput: PaginationInput!): [DriverDriver]
+  DriverDrivers(filterInput: DriverDriverFilterInput!, paginationInput: DriverDriverPaginationInput!): [DriverDriver]
   "Get the amount of Drivers filtered "
   DriverDriversSize(filterInput: DriverDriverFilterInput!): Int!
   "Get Driver by its id"

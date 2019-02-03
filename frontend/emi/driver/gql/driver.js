@@ -69,7 +69,7 @@ export const DriverDriver = gql`
 `;
 
 export const DriverDrivers = gql`
-  query DriverDrivers($filterInput: DriverDriverFilterInput!, $paginationInput: PaginationInput!) {
+  query DriverDrivers($filterInput: DriverDriverFilterInput!, $paginationInput: DriverDriverPaginationInput!) {
     DriverDrivers(filterInput: $filterInput, paginationInput: $paginationInput) {
       _id
       generalInfo {
