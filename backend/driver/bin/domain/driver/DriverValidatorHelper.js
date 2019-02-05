@@ -114,7 +114,7 @@ class DriverValidatorHelper {
     .pipe(
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => { if (!data.userMongo) this.throwCustomError$(USER_NOT_FOUND_ERROR_CODE)}),
-      tap(data => { if (!data.userMongo.auth || !data.userMongo.auth.username) this.throwCustomError(USER_DOES_NOT_HAVE_AUTH_CREDENTIALS_ERROR_CODE)}),
+      tap(data => { if (!data.userMongo.auth || !data.userMongo.auth.username) this.throwCustomError$(USER_DOES_NOT_HAVE_AUTH_CREDENTIALS_ERROR_CODE)}),
       tap(data => this.checkIfUserBelongsToTheSameBusiness(data.userMongo, data.authToken, 'Driver', data.roles)),
       tap(data => this.checkIfUserIsTheSameUserLogged(data.driver, authToken)),
     );

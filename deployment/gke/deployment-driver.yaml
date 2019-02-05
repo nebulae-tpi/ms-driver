@@ -13,7 +13,7 @@ spec:
         app: driver
     spec:      
       containers:
-      - image: nebulaetpi/driver.backend.driver:0.0.9
+      - image: nebulaetpi/driver.backend.driver:0.0.10
         name: driver
         volumeMounts:
         - name: google-application-credentials
