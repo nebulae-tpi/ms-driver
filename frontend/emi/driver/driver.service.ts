@@ -8,8 +8,7 @@ import {
 } from './gql/driver';
 
 @Injectable()
-export class DriverService {
-  
+export class DriverService { 
 
 
   constructor(private gateway: GatewayService) {
@@ -33,12 +32,12 @@ export class DriverService {
   /**
   * Hello World subscription sample, please remove
   */
- getEventSourcingMonitorHelloWorldSubscription$(): Observable<any> {
-  return this.gateway.apollo
-    .subscribe({
-      query: DriverHelloWorldSubscription
-    })
-    .map(resp => resp.data.EventSourcingMonitorHelloWorldSubscription.sn);
-}
+  getEventSourcingMonitorHelloWorldSubscription$(): Observable<any> {
+    return this.gateway.apollo
+      .subscribe({
+        query: DriverHelloWorldSubscription
+      })
+      .map(resp => resp.data.EventSourcingMonitorHelloWorldSubscription.sn);
+  }
 
 }
