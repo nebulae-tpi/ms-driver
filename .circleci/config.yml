@@ -1,5 +1,5 @@
 
-version: 2
+version: 2.1
 jobs:
   prepare:
     working_directory: ~/nebulae/
@@ -199,7 +199,7 @@ jobs:
 
 
 workflows: 
-  version: 2
+  version: 2.1
   build-and-deploy:
     jobs:
       - prepare:
