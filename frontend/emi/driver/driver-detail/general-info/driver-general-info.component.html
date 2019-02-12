@@ -88,7 +88,7 @@
 
       <div fxFlex="100" fxLayout="row wrap">
         <!--  PMR STATE -->
-        <div style="margin-bottom: 10px" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="h2">
+        <div style="margin-bottom: 10px" *ngIf="false" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="h2">
           {{'DRIVER.DETAILS.PMR_TITLE' | translate}}
           <section fxFlex.gt-xs="50" fxFlex="100" class="example-section">
             <mat-checkbox name="pmr" formControlName="pmr">{{'DRIVER.DETAILS.PMR' | translate}}</mat-checkbox>

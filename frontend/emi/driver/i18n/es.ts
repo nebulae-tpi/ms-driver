@@ -101,7 +101,7 @@ export const locale = {
       20002: 'Permiso denegado.',
       20010: 'Datos faltantes del usuario',
       20011: 'El nombre de usuario ya está siendo usado',
-      20012: 'Nombre de usuario invalido, el nombre de usuario debe contener como mínimo 8 caracteres y estar compuesto por al menos un (1) número y una (1) letra minúscula.',
+      20012: 'Nombre de usuario invalido, el nombre de usuario debe contener como mínimo 8 caracteres.',
       20014: 'El email ya está siendo usado',
       20015: 'Permiso denegado, no es posible actualizar la información de su propio usuario',
       20016: 'Permiso denegado, no tiene permisos para actualizar un usuario perteneciente a otra unidad de negocio',
