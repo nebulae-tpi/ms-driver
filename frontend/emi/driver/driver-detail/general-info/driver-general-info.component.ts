@@ -164,12 +164,12 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
   updateDriverGeneralInfo() {
     this.showConfirmationDialog$("DRIVER.UPDATE_MESSAGE", "DRIVER.UPDATE_TITLE")
       .pipe(
-        mergeMap(ok => {
+        mergeMap(() => {
           const generalInfoinput = {
             documentType: this.driverGeneralInfoForm.getRawValue().documentType,
             document: this.driverGeneralInfoForm.getRawValue().document,
-            name: this.driverGeneralInfoForm.getRawValue().name,
-            lastname: this.driverGeneralInfoForm.getRawValue().lastname,
+            name: this.driverGeneralInfoForm.getRawValue().name.toUpperCase(),
+            lastname: this.driverGeneralInfoForm.getRawValue().lastname.toUpperCase(),
             email: this.driverGeneralInfoForm.getRawValue().email,
             phone: this.driverGeneralInfoForm.getRawValue().phone,
             gender: this.driverGeneralInfoForm.getRawValue().gender,
