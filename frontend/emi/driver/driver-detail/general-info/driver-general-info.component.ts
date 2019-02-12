@@ -132,9 +132,15 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
       mergeMap(selectedBusiness => {
         return this.showConfirmationDialog$("DRIVER.CREATE_MESSAGE", "DRIVER.CREATE_TITLE")
         .pipe(
-          mergeMap(() => {
+          map(() => this.driverGeneralInfoForm.getRawValue()),
+          map(generalInfoRawValue => ({
+            ...generalInfoRawValue,
+            name: generalInfoRawValue.name.toUpperCase(),
+            lastname: generalInfoRawValue.lastname.toUpperCase(),
+          })),
+          mergeMap((generalInfoData: any) => {
             this.driver = {
-              generalInfo: this.driverGeneralInfoForm.getRawValue(),
+              generalInfo: generalInfoData,
               state: this.driverStateForm.getRawValue().state,
               businessId: selectedBusiness.id
             };
