@@ -61,7 +61,7 @@ class DriverDA {
     }
 
     if (filter.creationTimestamp) {
-      query.creationTimestamp = filter.creationTimestamp;
+      query.creationTimestamp = {$gte: filter.creationTimestamp};
     }
 
     if (filter.creatorUser) {
