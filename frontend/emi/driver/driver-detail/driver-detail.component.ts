@@ -118,7 +118,7 @@ export class DriverDetailComponent implements OnInit, OnDestroy {
       if(newdriver._id == this.driver._id){
         //Show message entity updated and redirect to the main page
         this.showSnackBar('DRIVER.ENTITY_UPDATED');
-        this.router.navigate(['driver/']);
+        //this.router.navigate(['driver/']);
       }
 
     }else{

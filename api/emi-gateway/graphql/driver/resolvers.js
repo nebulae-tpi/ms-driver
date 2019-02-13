@@ -34,7 +34,6 @@ module.exports = {
     //// QUERY ///////
     Query: {
         DriverDrivers(root, args, context) {
-            console.log('DriverDrivers ==> ', args);
             return RoleValidator.checkPermissions$(
                 context.authToken.realm_access.roles,
                 'ms-driver', 'DriverDrivers', PERMISSION_DENIED_ERROR_CODE,
