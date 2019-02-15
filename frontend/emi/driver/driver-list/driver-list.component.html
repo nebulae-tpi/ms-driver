@@ -33,6 +33,14 @@
                 <input matInput placeholder="{{'DRIVER.NAME' | translate}}" formControlName="name" id="name" maxlength="20" />
               </mat-form-field>
           
+              <mat-form-field>
+                <input maxlength="20" matInput placeholder="{{'DRIVER.LASTNAME' | translate}}" formControlName="lastname"/>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input maxlength="15" matInput placeholder="{{'DRIVER.DOCUMENT_ID' | translate}}" formControlName="document"/>
+              </mat-form-field>
+
               <!-- <mat-form-field>
                 <input matInput placeholder="{{'DRIVER.CREATOR_USER' | translate}}" formControlName="creatorUser" id="creatorUser"
                   maxlength="20" />
@@ -45,9 +53,6 @@
                 <mat-datepicker #pickerCreationDate></mat-datepicker>
               </mat-form-field>
           
-              <button fxFlex mat-raised-button mat-button class="mat-accent compose-dialog-button" aria-label="Filter" (click)="resetFilter()">
-                {{ "DRIVER.RESET_FILTER" | translate }}
-              </button>
             </div>
           </form>
 
@@ -89,6 +94,22 @@
             <mat-header-cell *cdkHeaderCellDef>{{ "DRIVER.NAME" | translate }}</mat-header-cell>
             <mat-cell *cdkCellDef="let element">
               <p class="text-truncate">{{ element.generalInfo.name }}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Lastname Column -->
+          <ng-container cdkColumnDef="lastname">
+            <mat-header-cell *cdkHeaderCellDef>{{ "DRIVER.LASTNAME" | translate }}</mat-header-cell>
+            <mat-cell *cdkCellDef="let element">
+              <p class="text-truncate">{{ element.generalInfo.lastname }}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Document Column -->
+          <ng-container cdkColumnDef="document">
+            <mat-header-cell *cdkHeaderCellDef>{{ "DRIVER.DOCUMENT" | translate }}</mat-header-cell>
+            <mat-cell *cdkCellDef="let element">
+              <p class="text-truncate">{{ element.generalInfo.document }}</p>
             </mat-cell>
           </ng-container>
 

@@ -121,13 +121,13 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
 
   createDriver() {
     this.toolbarService.onSelectedBusiness$
-    .pipe(
-      take(1),
+    .pipe(      
       tap(selectedBusiness => {
-        if(!selectedBusiness){
+        if (!selectedBusiness || selectedBusiness.id == null){
           this.showSnackBar('DRIVER.SELECT_BUSINESS');
         }
       }),
+      take(1),
       filter(selectedBusiness => selectedBusiness != null && selectedBusiness.id != null),
       mergeMap(selectedBusiness => {
         return this.showConfirmationDialog$("DRIVER.CREATE_MESSAGE", "DRIVER.CREATE_TITLE")
@@ -195,6 +195,9 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   onDriverStateChange() {
+    if (this.pageType === 'new') {
+      return;
+    }
     this.showConfirmationDialog$("DRIVER.UPDATE_MESSAGE", "DRIVER.UPDATE_TITLE")
       .pipe(
         mergeMap(ok => {

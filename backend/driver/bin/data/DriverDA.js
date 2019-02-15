@@ -60,6 +60,14 @@ class DriverDA {
       query["generalInfo.name"] = { $regex: filter.name, $options: "i" };
     }
 
+    if (filter.lastname) {
+      query["generalInfo.lastname"] = { $regex: filter.lastname, $options: "i" };
+    }
+
+    if (filter.document) {
+      query["generalInfo.document"] = { $regex: filter.document, $options: "i" };
+    }
+
     if (filter.creationTimestamp) {
       query.creationTimestamp = {$gte: filter.creationTimestamp};
     }

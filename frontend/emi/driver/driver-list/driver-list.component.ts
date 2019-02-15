@@ -106,9 +106,11 @@ export class DriverListComponent implements OnInit, OnDestroy {
   // Columns to show in the table
   displayedColumns = [
     "name",
+    "lastname",
+    "document",
     "state",
-    "creationTimestamp",
-    "creatorUser",
+    // "creationTimestamp",
+    // "creatorUser",
     "modificationTimestamp",
     "modifierUser"
   ];
@@ -183,6 +185,8 @@ export class DriverListComponent implements OnInit, OnDestroy {
     // Reactive Filter Form
     this.filterForm = this.formBuilder.group({
       name: [null],
+      lastname: [null],
+      document: [null],
       creationTimestamp: [null],
       creatorUser: [null],      
       //modificationDate: [null],
@@ -263,6 +267,8 @@ export class DriverListComponent implements OnInit, OnDestroy {
         const filterInput = {
           businessId: selectedBusiness ? selectedBusiness.id: null,
           name: filter.name,
+          lastname: filter.lastname,
+          document: filter.document,
           creatorUser: filter.creatorUser,
           creationTimestamp: filter.creationTimestamp ? filter.creationTimestamp.startOf('day').valueOf() : null
         };

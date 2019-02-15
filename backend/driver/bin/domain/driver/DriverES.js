@@ -109,7 +109,7 @@ class DriverES {
         .pipe(
             map(() => ({driverId: driverBlockRemovedEvt.aid, blockKey: driverBlockRemovedEvt.data.blockKey }) ),
             mergeMap(args => DriverBlocksDA.removeBlockFromDevice$(args) ),
-            tap(r => console.log(r.result))
+            //tap(r => console.log(r.result))
         )
 
     }

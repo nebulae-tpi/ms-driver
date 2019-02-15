@@ -71,6 +71,10 @@ input DriverDriverFilterInput {
   businessId: String
   "Name"
   name: String
+  "lastname"
+  lastname: String
+  "person ID"
+  document: String
   "State"
   state: Boolean
   "Creator user"
