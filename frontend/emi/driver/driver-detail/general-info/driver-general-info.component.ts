@@ -137,6 +137,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
             ...generalInfoRawValue,
             name: generalInfoRawValue.name.toUpperCase(),
             lastname: generalInfoRawValue.lastname.toUpperCase(),
+            email: generalInfoRawValue.email.toLowerCase()
           })),
           mergeMap((generalInfoData: any) => {
             this.driver = {
@@ -170,7 +171,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
             document: this.driverGeneralInfoForm.getRawValue().document,
             name: this.driverGeneralInfoForm.getRawValue().name.toUpperCase(),
             lastname: this.driverGeneralInfoForm.getRawValue().lastname.toUpperCase(),
-            email: this.driverGeneralInfoForm.getRawValue().email,
+            email: this.driverGeneralInfoForm.getRawValue().email.toLowerCase(),
             phone: this.driverGeneralInfoForm.getRawValue().phone,
             gender: this.driverGeneralInfoForm.getRawValue().gender,
             pmr: this.driverGeneralInfoForm.getRawValue().pmr,
