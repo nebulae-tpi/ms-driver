@@ -31,7 +31,7 @@ class DriverDA {
   }
 
   /**
-   * Gets a driver by its id and business(Optional)
+   * Gets a driver by its id and business(Optional).
    */
   static getDriver$(id, businessId) {
     const collection = mongoDB.db.collection(CollectionName);

@@ -66,7 +66,7 @@ import { ToolbarService } from "../../../../toolbar/toolbar.service";
 })
 // tslint:disable-next-line:class-name
 export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
-  // Subject to unsubscribe
+  // Subject to unsubscribe.
   private ngUnsubscribe = new Subject();
 
   @Input('pageType') pageType: string;
