@@ -13,7 +13,7 @@ spec:
         app: driver
     spec:      
       containers:
-      - image: nebulaetpi/driver.backend.driver:0.0.17
+      - image: DOCKERHUB/driver.backend.driver:0.0.17
         name: driver
         volumeMounts:
         - name: google-application-credentials
@@ -62,7 +62,11 @@ spec:
           value: "initial_lock"
         # KEYCLOAK BACKEND
         - name: KEYCLOAK_BACKEND_BASE_URL
-          value: "https://tpi-dev.nebulae.com.co/auth"
+          valueFrom:
+            configMapKeyRef:
+              name: environment-variables
+              key: keycloak-backend-base-url
+          #value: "https://tpi-dev.nebulae.com.co/auth"
         - name: KEYCLOAK_BACKEND_USER
           valueFrom:
             secretKeyRef:
