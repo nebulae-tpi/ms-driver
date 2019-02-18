@@ -44,7 +44,7 @@ import {
   MatDialog
 } from '@angular/material';
 
-//////////// i18n ////////////
+//////////// i18n ///////////
 import {
   TranslateService
 } from '@ngx-translate/core';

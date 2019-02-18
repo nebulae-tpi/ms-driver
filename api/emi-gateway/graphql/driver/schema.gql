@@ -129,7 +129,7 @@ input DriverLanguagesInput {
 }
 
 input DriverPasswordInput {
-  "User password"
+  "User password."
   password: String!
   "User temporary"
   temporary: Boolean!

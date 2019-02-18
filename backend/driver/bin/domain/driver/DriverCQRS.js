@@ -219,7 +219,7 @@ class DriverCQRS {
           // Update the state of the user on Keycloak
           mergeMap(data => {
             if(data.userMongo && data.userMongo.auth && data.userMongo.auth.userKeycloakId){
-              return DriverKeycloakDA.updateUserState$(data.userMongo.auth.userKeycloakId, data.driver.generalInfo).pipe(mapTo(data));
+              return DriverKeycloakDA.updateUserState$(data.userMongo.auth.userKeycloakId, data.driver.state).pipe(mapTo(data));
             }
             return of(data)
           })
