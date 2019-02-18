@@ -5,7 +5,7 @@
         <div fxLayout="row">
           <div fxFlex="80" *ngIf="driver.auth && driver.auth.username" fxLayoutAlign="start start" class="h2">{{'DRIVER.DETAILS.RESET_AUTH' | translate}}</div>
           <div fxFlex="80" *ngIf="!driver.auth || !driver.auth.username" fxLayoutAlign="start start" class="h2">{{'DRIVER.DETAILS.CREATE_AUTH' | translate}}</div>
-          <button mat-raised-button *ngIf="driver.auth && driver.auth.username" (click)="removeDriverAuth()">{{'DRIVER.DETAILS.REMOVE_USER_AUTH' | translate}}</button>
+          <button mat-raised-button *ngIf="driver.auth && driver.auth.username" type="button" (click)="removeDriverAuth()">{{'DRIVER.DETAILS.REMOVE_USER_AUTH' | translate}}</button>
         </div>
 
         <mat-form-field class="w-100-p">
