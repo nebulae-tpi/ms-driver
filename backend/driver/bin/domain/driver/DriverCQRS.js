@@ -42,7 +42,7 @@ class DriverCQRS {
       "Driver",
       "getDriver",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
@@ -66,7 +66,7 @@ class DriverCQRS {
       "Driver",
       "getDriverList",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
@@ -94,7 +94,7 @@ class DriverCQRS {
       "Driver",
       "getDriverListSize",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
@@ -128,7 +128,7 @@ class DriverCQRS {
       "Driver",
       "createDriver$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => DriverValidatorHelper.checkDriverCreationDriverValidator$(driver, authToken, roles)),
       mergeMap(data => eventSourcing.eventStore.emitEvent$(
@@ -163,7 +163,7 @@ class DriverCQRS {
       "Driver",
       "updateDriverGeneralInfo$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => 
         DriverDA.getDriver$(driver._id)
@@ -210,7 +210,7 @@ class DriverCQRS {
       "Driver",
       "updateDriverState$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => 
         DriverDA.getDriver$(driver._id)
@@ -257,7 +257,7 @@ class DriverCQRS {
       "Driver",
       "createDriverAuth$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => 
         DriverDA.getDriver$(driver._id)
@@ -319,7 +319,7 @@ class DriverCQRS {
       "Driver",
       "resetDriverPassword$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => 
         DriverDA.getDriver$(driver._id)
@@ -356,7 +356,7 @@ class DriverCQRS {
       "Driver",
       "removeUserAuth$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(roles => 
         DriverDA.getDriver$(driver._id)
@@ -410,7 +410,7 @@ class DriverCQRS {
       "Driver",
       "updateDriverMembershipState$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -436,7 +436,7 @@ class DriverCQRS {
       "driverBlocks",
       "getDriverBlocks$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       // map(() => [{
       //   key: 'PICO_Y_PLACA',
@@ -458,7 +458,7 @@ class DriverCQRS {
       "driverBlock",
       "removeDriverBlock$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
