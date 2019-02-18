@@ -323,7 +323,17 @@ class DriverCQRS {
     ).pipe(
       mergeMap(roles => 
         DriverDA.getDriver$(driver._id)
-        .pipe( mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverAuthValidator$(driver, authToken, roles, userMongo)))
+        .pipe( 
+          mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverAuthValidator$(driver, authToken, roles, userMongo)),
+          //Reset user password on Keycloak
+          mergeMap(data => {
+            const password = {
+              temporary: data.driver.passwordInput.temporary || false,
+              value: data.driver.passwordInput.password
+            }
+            return DriverKeycloakDA.resetUserPassword$(data.userMongo.auth.userKeycloakId, password);
+          })
+        )
       ),
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
