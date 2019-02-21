@@ -2,15 +2,6 @@ import gql from "graphql-tag";
 
 // We use the gql tag to parse our query string into a query document
 
-//Hello world sample, please remove
-export const getHelloWorld = gql`
-  query getHelloWorldFromDriver{
-    getHelloWorldFromDriver{
-      sn
-    }
-  }
-`;
-
 export const DriverDriverBlocks = gql`
   query DriverDriverBlocks($id: String!) {
     DriverDriverBlocks(id: $id) {
@@ -23,16 +14,6 @@ export const DriverDriverBlocks = gql`
     }
   }
 `;
-
-
-
-//Hello world sample, please remove
-export const DriverHelloWorldSubscription = gql`
-  subscription{
-    DriverHelloWorldSubscription{
-      sn
-  }
-}`;
 
 export const DriverDriver = gql`
   query DriverDriver($id: String!) {
