@@ -3,7 +3,8 @@ export const locale = {
   data: {
     DRIVER: {
       DRIVER_FILTERS: {
-        SHOW_BLOCKED: 'Just Blocked'
+        SHOW_BLOCKED: 'Just Blocked',
+        SHOW_INACTIVE: 'Just Inactive'
       },
       DETAIL_HEADER_NAME: 'Driver',
       DETAIL_HEADER_NEW: 'New Driver',

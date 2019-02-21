@@ -20,7 +20,7 @@
 
       <!-- CREATED IN -->
       <mat-form-field *ngIf="driver  && driver.creationTimestamp" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
-          <input matInput readonly placeholder="{{'DRIVER.DETAILS.CREATED_IN' | translate}}" value= "{{ driver.creationTimestamp | date: 'dd/MM/y HH:mm:ss' }">
+          <input matInput readonly placeholder="{{'DRIVER.DETAILS.CREATED_IN' | translate}}" value="{{ driver.creationTimestamp | date: 'dd/MM/y HH:mm:ss' }}">
       </mat-form-field>
       <!-- CREATED IN -->
 
@@ -32,7 +32,7 @@
 
       <!-- EDITED IN -->
       <mat-form-field *ngIf="driver && driver.modificationTimestamp" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
-          <input matInput readonly placeholder="{{'DRIVER.DETAILS.EDITED_IN' | translate}}" value= "{{ driver.modificationTimestamp | date: 'dd/MM/y HH:mm:ss' }}">
+          <input matInput readonly placeholder="{{'DRIVER.DETAILS.EDITED_IN' | translate}}" value="{{ driver.modificationTimestamp | date: 'dd/MM/y HH:mm:ss' }}">
       </mat-form-field>
       <!-- EDITED IN -->
 

@@ -186,6 +186,7 @@ export class DriverListComponent implements OnInit, OnDestroy {
     // Reactive Filter Form
     this.filterForm = this.formBuilder.group({
       showBlocked: [false],
+      showInactive: [false],
       name: [null],
       lastname: [null],
       document: [null],
@@ -239,6 +240,7 @@ export class DriverListComponent implements OnInit, OnDestroy {
           if (filter) {
             this.filterForm.patchValue({
               showBlocked: filter.showBlocked,
+              showInactive: filter.showInactive,
               name: filter.name,
               creationTimestamp: filter.creationTimestamp,
               creatorUser: filter.creatorUser
@@ -270,6 +272,7 @@ export class DriverListComponent implements OnInit, OnDestroy {
         const filterInput = {
           businessId: selectedBusiness ? selectedBusiness.id: null,
           showBlocked: filter.showBlocked,
+          showInactive: filter.showInactive,
           name: filter.name,
           lastname: filter.lastname,
           document: filter.document,

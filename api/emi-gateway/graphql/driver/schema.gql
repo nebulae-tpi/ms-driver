@@ -74,6 +74,8 @@ input DriverDriverFilterInput {
   businessId: String
   "Show only blocked"
   showBlocked: Boolean
+  "Show only Inactive"
+  showInactive: Boolean
   "Name"
   name: String
   "lastname"

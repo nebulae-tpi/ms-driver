@@ -55,9 +55,9 @@ class DriverDA {
       query.businessId = filter.businessId;
     }
 
-    if(filter.showBlocked){
-      query.blocks = { $exists: true, $ne: [] }
-    }
+    if(filter.showBlocked){ query.blocks = { $exists: true, $ne: [] } }
+    if(filter.showInactive){ query.state = false }
+
 
     if (filter.name) {
       query["generalInfo.name"] = { $regex: filter.name, $options: "i" };
