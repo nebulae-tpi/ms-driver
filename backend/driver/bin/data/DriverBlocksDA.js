@@ -1,9 +1,9 @@
 "use strict";
 
 let mongoDB = undefined;
-const CollectionName = "driverBlocks";
+const COLLECTION_NAME = "driverBlocks";
 const { CustomError } = require("../tools/customError");
-const { map } = require("rxjs/operators");
+const { map, catchError } = require("rxjs/operators");
 const { of, Observable, defer } = require("rxjs");
 
 class DriverBlocksDA {
@@ -22,7 +22,7 @@ class DriverBlocksDA {
 
 
   static findBlocksByDriver$(driverId) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
     const query = {
       driverId: driverId
     };
@@ -32,13 +32,29 @@ class DriverBlocksDA {
     )
   }
 
-  static removeBlockFromDevice$({driverId, blockKey}){
-    const collection = mongoDB.db.collection(CollectionName);
+  static removeBlockFromDriver$({driverId, blockKey}){
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
     return defer(() => collection.deleteMany({driverId: driverId, key: blockKey}))
   }
 
+  static addBlockToDriver$({driverId, blockKey, user}){
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
+    return defer(() => collection.insertOne({driverId: driverId, key: blockKey, user}))
+    .pipe(
+      catchError(err => {
+        if(err.code == 11000){
+          console.log(err.message);
+          return of(null);
+        }
+        return throwError(err);
+        
+      })
+    )
+  }
+
+
   static removeExpiredBlocks$(timestamp){
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
     return defer(() => collection.deleteMany( { endTime: { $$lte: timestamp } }))
   }
 

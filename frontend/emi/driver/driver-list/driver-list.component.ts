@@ -109,6 +109,7 @@ export class DriverListComponent implements OnInit, OnDestroy {
     "lastname",
     "document",
     "state",
+    'blocks',
     // "creationTimestamp",
     // "creatorUser",
     "modificationTimestamp",
@@ -184,6 +185,7 @@ export class DriverListComponent implements OnInit, OnDestroy {
   buildFilterForm() {
     // Reactive Filter Form
     this.filterForm = this.formBuilder.group({
+      showBlocked: [false],
       name: [null],
       lastname: [null],
       document: [null],
@@ -236,6 +238,7 @@ export class DriverListComponent implements OnInit, OnDestroy {
     ).subscribe(([filter, paginator]) => {
           if (filter) {
             this.filterForm.patchValue({
+              showBlocked: filter.showBlocked,
               name: filter.name,
               creationTimestamp: filter.creationTimestamp,
               creatorUser: filter.creatorUser
@@ -266,6 +269,7 @@ export class DriverListComponent implements OnInit, OnDestroy {
       map(([filter, paginator,selectedBusiness]) => {
         const filterInput = {
           businessId: selectedBusiness ? selectedBusiness.id: null,
+          showBlocked: filter.showBlocked,
           name: filter.name,
           lastname: filter.lastname,
           document: filter.document,

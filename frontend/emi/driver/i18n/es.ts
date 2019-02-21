@@ -1,7 +1,10 @@
 export const locale = {
   lang: 'es',
   data: {
-    'DRIVER': {
+    DRIVER: {
+      DRIVER_FILTERS: {
+        SHOW_BLOCKED: 'Sólo Bloqueados'
+      },
       DETAIL_HEADER_NAME: 'CONDUCTOR',
       DETAIL_HEADER_NEW: 'Nuevo Conductor',
       TITLE: 'Conductor',
@@ -25,6 +28,10 @@ export const locale = {
           MEMBERSHIP: 'Membresía',
           CREDENTIALS: 'Credenciales'
         },
+        CREATED_BY: 'Creado Por',
+        CREATED_IN: 'Creado',
+        EDITED_BY: 'Editado Por',
+        EDITED_IN: 'Editado',
         GENDER: 'Género',
         GENDER_MALE: 'Masculino',
         GENDER_FEMALE: 'Femenino',
@@ -71,6 +78,7 @@ export const locale = {
           english: 'Inglés'
         }   
       },
+      BLOCKED: 'Bloqueos',
       BLOCKS: {
         KEY: 'Bloqueo',
         NOTES: 'Notas',
@@ -112,6 +120,8 @@ export const locale = {
       20018: 'Usuario ya tiene registrada credenciales de autenticación',
       20019: 'Usuario no encontrado',
       20020: 'El usuario no tiene credenciales de autenticación',
+      20021: 'El Conductor no ha sido eliminado',
+      20022: 'El conductor ya existe en esta unidad de negocio',
     }
   }
 };

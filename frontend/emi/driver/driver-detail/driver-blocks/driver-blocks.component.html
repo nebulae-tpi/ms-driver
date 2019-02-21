@@ -53,20 +53,7 @@
               <p class="text-truncate"> {{ block.endTime | date }} </p>
           </mat-cell>
       </ng-container>
-
-      <!-- REMOVE BLOCK COLUMN -->
-      <ng-container cdkColumnDef="actions">
-          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{ "DRIVER.BLOCKS.ACTIONS" | translate }}
-          </mat-header-cell>
-          <mat-cell *cdkCellDef="let block" fxLayoutAlign="center center">
-            <button mat-icon-button (click)="removeBlock(block)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-cell>
-      </ng-container>
-
-
-
+     
       <!-- Creator user Column -->
       <ng-container cdkColumnDef="user">
           <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{ "DRIVER.BLOCKS.USER" | translate }}
@@ -75,6 +62,17 @@
               <p class="text-truncate">{{ block.user }}</p>
           </mat-cell>
       </ng-container>
+
+       <!-- REMOVE BLOCK COLUMN -->
+       <ng-container cdkColumnDef="actions">
+            <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{ "DRIVER.BLOCKS.ACTIONS" | translate }}
+            </mat-header-cell>
+            <mat-cell *cdkCellDef="let block" fxLayoutAlign="center center">
+              <button mat-icon-button (click)="removeBlock(block)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+        </ng-container>
 
       <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 

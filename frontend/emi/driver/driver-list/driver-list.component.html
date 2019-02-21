@@ -29,6 +29,10 @@
         <div class="nav mt-20" fxLayout="column">
           <form fxLayout="column" fxLayoutAlign="start" fxFlex="100" name="form" [formGroup]="filterForm">
             <div fxLayout="column" fxLayoutAlign="space-between center" fxFlex="100">
+
+              <mat-checkbox class="mb-12" formControlName="showBlocked">{{'DRIVER.DRIVER_FILTERS.SHOW_BLOCKED' | translate}}</mat-checkbox>
+
+
               <mat-form-field>
                 <input matInput placeholder="{{'DRIVER.NAME' | translate}}" formControlName="name" id="name" maxlength="20" />
               </mat-form-field>
@@ -115,17 +119,26 @@
 
           <!-- Active Column -->
           <ng-container cdkColumnDef="state">
-            <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{"DRIVER.ACTIVE" | translate}}</mat-header-cell>
-            <mat-cell *cdkCellDef="let element" fxHide fxShow.gt-xs>
+            <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{"DRIVER.ACTIVE" | translate}}</mat-header-cell>
+            <mat-cell *cdkCellDef="let element" fxLayoutAlign="center center">
               <mat-icon *ngIf="element.state" class="active-icon mat-green-600-bg s-16">check</mat-icon>
               <mat-icon *ngIf="!element.state" class="active-icon mat-red-500-bg s-16">close</mat-icon>
             </mat-cell>
           </ng-container>
 
+           <!-- BLOCKS COLUMN -->
+           <ng-container cdkColumnDef="blocks">
+              <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{"DRIVER.BLOCKED" | translate}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let element" fxLayoutAlign="center center">
+                <mat-icon *ngIf="!element.blocks || element.blocks.length == 0" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+                <mat-icon *ngIf="element.blocks && element.blocks.length > 0" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+              </mat-cell>
+            </ng-container>
+
           <!-- Creation timestamp Column -->
           <ng-container cdkColumnDef="creationTimestamp">
-              <mat-header-cell *cdkHeaderCellDef>{{"DRIVER.CREATION_TIMESTAMP" | translate}}</mat-header-cell>
-              <mat-cell *cdkCellDef="let element">
+              <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{"DRIVER.CREATION_TIMESTAMP" | translate}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let element" fxHide fxShow.gt-xs>
                 <p class="text-truncate">
                   {{ element.creationTimestamp | date: "dd/MM/y HH:mm:ss" }}
                 </p>
@@ -134,26 +147,24 @@
 
           <!-- Creator user Column -->
           <ng-container cdkColumnDef="creatorUser">
-              <mat-header-cell *cdkHeaderCellDef>{{"DRIVER.CREATOR_USER" | translate}}</mat-header-cell>
-              <mat-cell *cdkCellDef="let element">
+              <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{"DRIVER.CREATOR_USER" | translate}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let element" fxHide fxShow.gt-xs>
                 <p class="text-truncate">{{  element.creatorUser }}</p>
               </mat-cell>
           </ng-container>
 
           <!-- Last modification timestamp Column -->
           <ng-container cdkColumnDef="modificationTimestamp">
-              <mat-header-cell *cdkHeaderCellDef>{{"DRIVER.LAST_MODIFICATION_TIMESTAMP" | translate}}</mat-header-cell>
-              <mat-cell *cdkCellDef="let element">
-                <p class="text-truncate">
-                  {{ element.modificationTimestamp | date: "dd/MM/y HH:mm:ss" }}
-                </p>
+              <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{"DRIVER.LAST_MODIFICATION_TIMESTAMP" | translate}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let element" fxHide fxShow.gt-xs>
+                <p> {{ element.modificationTimestamp | date: "dd/MM/y HH:mm:ss" }} </p>
               </mat-cell>
           </ng-container>
 
           <!-- Modifier user Column -->
           <ng-container cdkColumnDef="modifierUser">
-              <mat-header-cell *cdkHeaderCellDef>{{"DRIVER.MODIFIER_USER" | translate}}</mat-header-cell>
-              <mat-cell *cdkCellDef="let element">
+              <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{"DRIVER.MODIFIER_USER" | translate}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let element" fxHide fxShow.gt-xs>
                 <p class="text-truncate">{{  element.modifierUser }}</p>
               </mat-cell>
           </ng-container>  
@@ -161,7 +172,7 @@
 
           <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 
-          <mat-row *cdkRowDef="let row; columns: displayedColumns" class="selectedElement" (click)="selectdriverRow(row)"
+          <mat-row *cdkRowDef="let row; columns: displayedColumns" class="item" (click)="selectdriverRow(row)"
             [ngClass]="{ highlight: selectedDriver && selectedDriver._id == row._id }"
             [routerLink]="row._id" matRipple>
           </mat-row>

@@ -1,6 +1,6 @@
 'use strict'
 
-const {of} = require("rxjs");
+const {of, forkJoin} = require("rxjs");
 const { tap, mergeMap, catchError, map, mapTo } = require('rxjs/operators');
 const broker = require("../../tools/broker/BrokerFactory")();
 const DriverDA = require('../../data/DriverDA');
@@ -108,7 +108,28 @@ class DriverES {
         return of(driverBlockRemovedEvt)
         .pipe(
             map(() => ({driverId: driverBlockRemovedEvt.aid, blockKey: driverBlockRemovedEvt.data.blockKey }) ),
-            mergeMap(args => DriverBlocksDA.removeBlockFromDevice$(args) ),
+            mergeMap(blockInfo => forkJoin(
+                DriverBlocksDA.removeBlockFromDriver$(blockInfo),
+                DriverDA.removeBlock$(blockInfo)
+            )),
+        )
+
+    }
+
+    handleDriverBlockAdded$(driverBlockAddedEvt){
+        console.log("handleDriverBlockAdded$", driverBlockAddedEvt.data);
+        return of(driverBlockAddedEvt)
+        .pipe(
+            map(() => ({
+                driverId: driverBlockAddedEvt.aid,
+                blockKey: driverBlockAddedEvt.data.blockKey,
+                user: driverBlockAddedEvt.user
+            }) ),
+            mergeMap(blockInfo => forkJoin(
+                DriverBlocksDA.addBlockToDriver$(blockInfo),
+                DriverDA.insertBlock$(blockInfo)
+
+            )),
             //tap(r => console.log(r.result))
         )
 

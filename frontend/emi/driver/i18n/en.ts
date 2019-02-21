@@ -2,6 +2,9 @@ export const locale = {
   lang: 'en',
   data: {
     DRIVER: {
+      DRIVER_FILTERS: {
+        SHOW_BLOCKED: 'Just Blocked'
+      },
       DETAIL_HEADER_NAME: 'Driver',
       DETAIL_HEADER_NEW: 'New Driver',
       TITLE: 'Drivers',
@@ -25,6 +28,10 @@ export const locale = {
           MEMBERSHIP: 'Membership',
           CREDENTIALS: 'Credentials'
         },
+        CREATED_BY: 'Created By',
+        CREATED_IN: 'Created',
+        EDITED_BY: 'Edited By',
+        EDITED_IN: 'Edited',
         GENDER: 'Gender',
         GENDER_MALE: 'Male',
         GENDER_FEMALE: 'Female',
@@ -71,6 +78,7 @@ export const locale = {
           english: 'English'
         }   
       },
+      BLOCKED: 'Bloqueos',
       BLOCKS: {
         KEY: 'Block',
         NOTES: 'Notes',
@@ -111,6 +119,8 @@ export const locale = {
       20018: 'User Already Has Auth Credentials',
       20019: 'User Was Not Found',
       20020: 'User Does Not Have Auth Credentials',
+      20021: 'Driver was not deleted',
+      20022: 'The driver already exist in this business unit',
     },
   }
 };

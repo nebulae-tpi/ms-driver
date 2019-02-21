@@ -12,6 +12,32 @@
         </form>
       </div>
 
+      <!-- CREATED BY -->
+      <mat-form-field *ngIf="driver && driver.creatorUser" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+          <input matInput readonly placeholder="{{'DRIVER.DETAILS.CREATED_BY' | translate}}" [value]= "driver.creatorUser">
+      </mat-form-field>
+      <!-- CREATED BY -->
+
+      <!-- CREATED IN -->
+      <mat-form-field *ngIf="driver  && driver.creationTimestamp" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+          <input matInput readonly placeholder="{{'DRIVER.DETAILS.CREATED_IN' | translate}}" [value]= "driver.creationTimestamp">
+      </mat-form-field>
+      <!-- CREATED IN -->
+
+      <!-- EDITED BY -->
+      <mat-form-field *ngIf="driver && driver.modifierUser" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+          <input matInput readonly placeholder="{{'DRIVER.DETAILS.EDITED_BY' | translate}}" [value]= "driver.modifierUser">
+      </mat-form-field>
+      <!-- EDITED BY -->
+
+      <!-- EDITED IN -->
+      <mat-form-field *ngIf="driver && driver.modificationTimestamp" fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
+          <input matInput readonly placeholder="{{'DRIVER.DETAILS.EDITED_IN' | translate}}" [value]= "driver.modificationTimestamp">
+      </mat-form-field>
+      <!-- EDITED IN -->
+
+      <mat-divider *ngIf="driver && driver.creatorUser " fxFlex="100" class="mb-12" ></mat-divider>
+
        <!-- DOCUMENT TYPE -->
        <mat-form-field fxFlex.gt-xs="50" fxFlex="100" fxLayout="column" class="pr-8 pl-8">
         <mat-select name="documentType" formControlName="documentType" placeholder="{{'DRIVER.DETAILS.DOCUMENT_TYPE' | translate}}">

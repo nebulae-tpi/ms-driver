@@ -2,7 +2,7 @@
 
 let mongoDB = undefined;
 //const mongoDB = require('./MongoDB')();
-const CollectionName = "Driver";
+const COLLECTION_NAME = "Driver";
 const { CustomError } = require("../tools/customError");
 const { map } = require("rxjs/operators");
 const { of, Observable, defer } = require("rxjs");
@@ -26,7 +26,7 @@ class DriverDA {
    * @param {Object} filterQuery Query to filter
    */
   static getDriverByFilter$(filterQuery) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
     return defer(() => collection.findOne(filterQuery));
   }
 
@@ -34,7 +34,7 @@ class DriverDA {
    * Gets a driver by its id and business(Optional).
    */
   static getDriver$(id, businessId) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
 
     const query = {
       _id: id      
@@ -47,13 +47,16 @@ class DriverDA {
   }
 
   static getDriverList$(filter, pagination) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
 
-    const query = {
-    };
+    const query = {};   
 
     if (filter.businessId) {
       query.businessId = filter.businessId;
+    }
+
+    if(filter.showBlocked){
+      query.blocks = { $exists: true, $ne: [] }
     }
 
     if (filter.name) {
@@ -90,14 +93,14 @@ class DriverDA {
   }
 
   static getDriverSize$(filter) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
 
-    const query = {
-    };
+    const query = {};
 
     if (filter.businessId) {
       query.businessId = filter.businessId;
     }
+    if(filter.showBlocked){ query.blocks = { $exists: true, $ne: [] } }
 
     if (filter.name) {
       query["generalInfo.name"] = { $regex: filter.name, $options: "i" };
@@ -123,7 +126,7 @@ class DriverDA {
    * @param {*} driver driver to create
    */
   static createDriver$(driver) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
     return defer(() => collection.insertOne(driver));
   }
 
@@ -133,7 +136,7 @@ class DriverDA {
    * @param {*} DriverGeneralInfo  New general information of the Driver
    */
   static updateDriverGeneralInfo$(id, DriverGeneralInfo) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
 
     return defer(()=>
         collection.findOneAndUpdate(
@@ -155,7 +158,7 @@ class DriverDA {
    * @param {boolean} newDriverState boolean that indicates the new Driver state
    */
   static updateDriverState$(id, newDriverState) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
     
     return defer(()=>
         collection.findOneAndUpdate(
@@ -177,7 +180,7 @@ class DriverDA {
    * @param {boolean} newDriverState boolean that indicates the new Driver membership state
    */
   static updateDriverMembershipState$(id, newDriverMembershipState) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
     
     return defer(()=>
         collection.findOneAndUpdate(
@@ -201,7 +204,7 @@ class DriverDA {
    * @param {*} userAuth.username username
    */
   static updateUserAuth$(userId, userAuth) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
 
     return defer(()=>
         collection.findOneAndUpdate(
@@ -226,7 +229,7 @@ class DriverDA {
    * @param {*} userAuth.username username
    */
   static removeUserAuth$(userId, userAuth) {
-    const collection = mongoDB.db.collection(CollectionName);
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
 
     return defer(()=>
         collection.findOneAndUpdate(
@@ -256,6 +259,40 @@ class DriverDA {
       query._id = {$ne: ignoreUserId};
     }
     return this.getDriverByFilter$(query);
+  }
+
+  static insertBlock$({ driverId, blockKey  }){
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
+    return defer(() => collection.updateOne(
+      { _id: driverId },
+      {
+        $addToSet: { blocks: blockKey }
+      } 
+    ))
+  }
+
+  static removeBlock$({ driverId, blockKey  }){
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
+    return defer(() => collection.updateOne(
+      { _id: driverId },
+      {
+        $pull: { blocks: blockKey }
+      } 
+    ))
+  }
+
+  static findByDocumentId$(documentType, documentId, businessId) {
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
+    return defer(() => collection.findOne(
+      {
+        $and: [
+          { "generalInfo.document": documentId },
+          { "generalInfo.documentType": documentType },
+          { businessId: businessId }
+        ]
+      },
+      {projection: { _id: 1 } }
+    ))
   }
 
 }

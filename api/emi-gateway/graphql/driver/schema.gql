@@ -26,6 +26,8 @@ type DriverDriver {
   modifierUser: String!
   "Business ID"
   businessId: String!
+  "blocks"
+  blocks: [String]
 }
 
 type DriverAuth {
@@ -69,6 +71,8 @@ type DriverLanguages {
 input DriverDriverFilterInput {
   "ID of the business"
   businessId: String
+  "Show only blocked"
+  showBlocked: Boolean
   "Name"
   name: String
   "lastname"

@@ -16,7 +16,8 @@ const {
   USER_CREDENTIAL_EXIST_ERROR_CODE,
   USER_NOT_FOUND_ERROR_CODE,
   USER_DOES_NOT_HAVE_AUTH_CREDENTIALS_ERROR_CODE,
-  USER_WAS_NOT_DELETED
+  USER_WAS_NOT_DELETED,
+  USER_ALREADY_EXIST_IN_BU
 } = require("../../tools/customError");
 
 const context = "Driver";
@@ -36,7 +37,9 @@ class DriverValidatorHelper {
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => { if (!data.driver.businessId) this.throwCustomError$(MISSING_BUSINESS_ERROR_CODE)}),
       //tap(data => this.checkIfUserBelongsToTheSameBusiness(data.driver, data.authToken, 'Driver', data.roles)),
-      mergeMap(data => this.checkEmailExistKeycloakOrMongo$(data.driver.generalInfo.email).pipe(mapTo(data)))
+      mergeMap(data => this.checkEmailExistKeycloakOrMongo$(data.driver.generalInfo.email)),
+      mergeMap(() => this.verifyIfUserAlreadyExist$({driver, authToken, roles}) ),
+      map(() => ({driver, authToken, roles}) )
     );
   }
 
@@ -179,6 +182,14 @@ class DriverValidatorHelper {
         return of(emailLowercase);
       })
     );
+  }
+
+  static verifyIfUserAlreadyExist$({driver}){
+    return DriverDA.findByDocumentId$(driver.generalInfo.documentType, driver.generalInfo.document, driver.businessId )
+    .pipe(
+      tap(r => console.log("RESULTADO DE LA BUSQUEDA DEL USUARIO CON LA CEDULE POR BU ES ==> ", r)),
+      mergeMap(r => r ? this.throwCustomError$(USER_ALREADY_EXIST_IN_BU) : of(null) )
+    )    
   }
 
   /**

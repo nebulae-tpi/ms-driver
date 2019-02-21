@@ -14,6 +14,7 @@ const USER_CREDENTIAL_EXIST_ERROR_CODE = {code: 20018, description: 'The user al
 const USER_NOT_FOUND_ERROR_CODE = {code: 20019, description: 'The user was not found'};
 const USER_DOES_NOT_HAVE_AUTH_CREDENTIALS_ERROR_CODE = {code: 20020, description: 'The user does not have auth credentials'};
 const USER_WAS_NOT_DELETED = {code: 20021, description: 'An error ocurred, user was not deleted'};
+const USER_ALREADY_EXIST_IN_BU = {code: 20022, description: "Driver can't be created because already exist in this Business unit "};
 
 /**
  * class to emcapsulute diferent errors.
@@ -71,5 +72,6 @@ class CustomError extends Error {
     USER_CREDENTIAL_EXIST_ERROR_CODE,
     USER_NOT_FOUND_ERROR_CODE,
     USER_DOES_NOT_HAVE_AUTH_CREDENTIALS_ERROR_CODE,
-    USER_WAS_NOT_DELETED
+    USER_WAS_NOT_DELETED,
+    USER_ALREADY_EXIST_IN_BU
   } 

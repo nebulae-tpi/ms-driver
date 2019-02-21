@@ -11,7 +11,7 @@ const MATERIALIZED_VIEW_TOPIC = "materialized-view-updates";
 const GraphqlResponseTools = require('../../tools/GraphqlResponseTools');
 const RoleValidator = require("../../tools/RoleValidator");
 const { of, interval } = require("rxjs");
-const { take, mergeMap, catchError, map, toArray, mapTo } = require('rxjs/operators');
+const { take, mergeMap, catchError, map, toArray, mapTo, delay } = require('rxjs/operators');
 const {
   CustomError,
   DefaultError,

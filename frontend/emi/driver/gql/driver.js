@@ -97,7 +97,8 @@ export const DriverDrivers = gql`
       creationTimestamp
       creatorUser
       modificationTimestamp
-      modifierUser
+      modifierUser,
+      blocks
     }
   }
 `;
