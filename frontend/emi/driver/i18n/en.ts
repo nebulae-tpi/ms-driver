@@ -29,6 +29,7 @@ export const locale = {
           MEMBERSHIP: 'Membership',
           CREDENTIALS: 'Credentials'
         },
+        NO_HAVE_BLOCKS: 'The Driver Haven\'t Blocks',
         CREATED_BY: 'Created By',
         CREATED_IN: 'Created',
         EDITED_BY: 'Edited By',

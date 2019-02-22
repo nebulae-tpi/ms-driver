@@ -284,7 +284,6 @@ export class DriverListComponent implements OnInit, OnDestroy {
           count: paginator.pagination.count,
           sort: paginator.pagination.sort,
         };
-        console.log('PAGINATION INPUT ==> ', paginationInput);
         return [filterInput, paginationInput];
       }),
       mergeMap(([filterInput, paginationInput]) => {

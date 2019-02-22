@@ -92,6 +92,8 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
     'actions'
   ];
 
+  blocks = [];
+
 
   constructor(
     private translationLoader: FuseTranslationLoaderService,
@@ -112,8 +114,10 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
     this.DriverDetailservice.getDriverDriverBlocks$(this.driver._id)
     .pipe(
       map(r => JSON.parse(JSON.stringify(r.data.DriverDriverBlocks))),
-      tap((R) => console.log('LA RESPUESTA ES ...', R)),
-      tap(blocks =>  this.dataSource.data = blocks)
+      tap(blocks =>  {
+        this.blocks = blocks;
+        this.dataSource.data = blocks;        
+      })
     ).subscribe(() => {}, err => console.log(err), () => console.log('COMPLETADO'));
 
     this.driverblocksForm = new FormGroup({

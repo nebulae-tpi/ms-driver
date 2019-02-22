@@ -29,6 +29,7 @@ export const locale = {
           MEMBERSHIP: 'Membresía',
           CREDENTIALS: 'Credenciales'
         },
+        NO_HAVE_BLOCKS: 'El Conductor No Tiene Bloqueos',
         CREATED_BY: 'Creado Por',
         CREATED_IN: 'Creado',
         EDITED_BY: 'Editado Por',
