@@ -56,7 +56,9 @@ class DriverValidatorHelper {
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => this.checkIfUserIsTheSameUserLogged(data.driver, authToken)),
       tap(data => this.checkIfUserBelongsToTheSameBusiness(data.userMongo, data.authToken, 'Driver', data.roles)),
-      mergeMap(data => this.checkEmailExistKeycloakOrMongo$(data.driver.generalInfo.email, userMongo).pipe(mapTo(data)))    
+      mergeMap(data => this.checkEmailExistKeycloakOrMongo$(data.driver.generalInfo.email, userMongo)),
+      mergeMap(() => this.verifyIfUserAlreadyExist$({driver, userMongo }) ),
+      map(() => ({driver, authToken, roles, userMongo: userMongo} ))
     );
   }
 
@@ -184,7 +186,10 @@ class DriverValidatorHelper {
     );
   }
 
-  static verifyIfUserAlreadyExist$({driver}){
+  static verifyIfUserAlreadyExist$({driver, userMongo}){
+    if(!driver.businessId && userMongo ){
+      driver.businessId = userMongo.businessId;
+    }
     return DriverDA.findByDocumentId$(driver.generalInfo.documentType, driver.generalInfo.document, driver.businessId )
     .pipe(
       tap(r => console.log("RESULTADO DE LA BUSQUEDA DEL USUARIO CON LA CEDULE POR BU ES ==> ", r)),
