@@ -113,8 +113,8 @@
 
           <!-- Document Column -->
           <ng-container cdkColumnDef="document">
-            <mat-header-cell *cdkHeaderCellDef>{{ "DRIVER.DOCUMENT" | translate }}</mat-header-cell>
-            <mat-cell *cdkCellDef="let element">
+            <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs >{{ "DRIVER.DOCUMENT" | translate }}</mat-header-cell>
+            <mat-cell *cdkCellDef="let element" fxHide fxShow.gt-xs>
               <p class="text-truncate">{{ element.generalInfo.document }}</p>
             </mat-cell>
           </ng-container>
