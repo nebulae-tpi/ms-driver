@@ -20,7 +20,6 @@ class DriverBlocksDA {
     });
   }
 
-
   static findBlocksByDriver$(driverId) {
     const collection = mongoDB.db.collection(COLLECTION_NAME);
     const query = {

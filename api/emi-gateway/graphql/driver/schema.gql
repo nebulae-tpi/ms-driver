@@ -173,7 +173,7 @@ type Query {
 }
 
 type Mutation {
-  "Create a new Driver"
+  "Create a new Driver."
   DriverCreateDriver(input: DriverDriverInput!): CommandResponse
   "Update the Driver generalInfo"
   DriverUpdateDriverGeneralInfo(id:ID!, input: DriverDriverGeneralInfoInput!): CommandResponse

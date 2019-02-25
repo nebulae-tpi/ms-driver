@@ -105,7 +105,7 @@ export class DriverDetailComponent implements OnInit, OnDestroy {
   checkIfEntityHasBeenUpdated(newdriver){
     if(this.DriverDetailservice.lastOperation == 'CREATE'){
 
-      //Fields that will be compared to check if the entity was created
+      // Fields that will be compared to check if the entity was created
       if(newdriver.generalInfo.name == this.DriverDetailservice.driver.generalInfo.name
         && newdriver.generalInfo.description == this.DriverDetailservice.driver.generalInfo.description){
         //Show message entity created and redirect to the main page
