@@ -13,7 +13,7 @@ spec:
         app: driver
     spec:      
       containers:
-      - image: DOCKERHUB/driver.backend.driver:0.0.27
+      - image: DOCKERHUB/driver.backend.driver:0.0.28
         name: driver
         volumeMounts:
         - name: google-application-credentials

@@ -242,8 +242,9 @@ export class DriverListComponent implements OnInit, OnDestroy {
               showBlocked: filterValue.showBlocked,
               showInactive: filterValue.showInactive,
               name: filterValue.name,
-              creationTimestamp: filterValue.creationTimestamp,
-              creatorUser: filterValue.creatorUser
+              lastname: filterValue.lastname,
+              document: filterValue.document,
+              creationTimestamp: filterValue.creationTimestamp
             });
           }
 

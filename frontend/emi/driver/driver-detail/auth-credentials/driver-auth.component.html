@@ -2,13 +2,13 @@
 
 
     <form name="userAuthForm" [formGroup]="userAuthForm" #formDirective="ngForm" class="user w-100-p" fxLayout="column" class="mat-white-bg p-24 mr-24 mb-24">
-        <div fxLayout="row">
+        <div fxLayout="row wrap">
           <div fxFlex="80" *ngIf="driver.auth && driver.auth.username" fxLayoutAlign="start start" class="h2">{{'DRIVER.DETAILS.RESET_AUTH' | translate}}</div>
           <div fxFlex="80" *ngIf="!driver.auth || !driver.auth.username" fxLayoutAlign="start start" class="h2">{{'DRIVER.DETAILS.CREATE_AUTH' | translate}}</div>
-          <button mat-raised-button *ngIf="driver.auth && driver.auth.username" type="button" (click)="removeDriverAuth()">{{'DRIVER.DETAILS.REMOVE_USER_AUTH' | translate}}</button>
+          <button class="mt-8" mat-raised-button *ngIf="driver.auth && driver.auth.username" type="button" (click)="removeDriverAuth()">{{'DRIVER.DETAILS.REMOVE_USER_AUTH' | translate}}</button>
         </div>
 
-        <mat-form-field class="w-100-p">
+        <mat-form-field class="w-100-p mt-16">
           <input matInput name="username" formControlName="username" maxlength="40" placeholder="{{'DRIVER.DETAILS.USERNAME' | translate}}">
           <mat-error *ngIf="userAuthForm.hasError('required', ['username'])">
             {{'DRIVER.DETAILS.USERNAME_REQUIRED' | translate}}
