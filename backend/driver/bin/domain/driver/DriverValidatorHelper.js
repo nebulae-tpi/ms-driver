@@ -1,5 +1,6 @@
 const DriverDA = require("../../data/DriverDA");
 const DriverKeycloakDA = require("../../data/DriverKeycloakDA");
+const TokenKeycloakDA = require("../../data/TokenKeycloakDA");
 const { of, interval, forkJoin, throwError } = require("rxjs");
 const { take, mergeMap, catchError, map, toArray, tap, mapTo } = require('rxjs/operators');
 const { 
@@ -17,7 +18,8 @@ const {
   USER_NOT_FOUND_ERROR_CODE,
   USER_DOES_NOT_HAVE_AUTH_CREDENTIALS_ERROR_CODE,
   USER_WAS_NOT_DELETED,
-  USER_ALREADY_EXIST_IN_BU
+  USER_ALREADY_EXIST_IN_BU,
+  INVALID_TOKEN_ERROR_CODE
 } = require("../../tools/customError");
 
 const context = "Driver";
@@ -34,6 +36,7 @@ class DriverValidatorHelper {
   static checkDriverCreationDriverValidator$(driver, authToken, roles, userMongo) {
     return of({driver, authToken, roles})
     .pipe(
+      mergeMap(data => this.checkTokenValidity$().pipe(mapTo(data))),
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => { if (!data.driver.businessId) this.throwCustomError$(MISSING_BUSINESS_ERROR_CODE)}),
       //tap(data => this.checkIfUserBelongsToTheSameBusiness(data.driver, data.authToken, 'Driver', data.roles)),
@@ -53,6 +56,7 @@ class DriverValidatorHelper {
   static checkDriverUpdateDriverValidator$(driver, authToken, roles, userMongo) {
     return of({driver, authToken, roles, userMongo: userMongo})
     .pipe(
+      mergeMap(data => this.checkTokenValidity$().pipe(mapTo(data))),
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => this.checkIfUserIsTheSameUserLogged(data.driver, authToken)),
       tap(data => this.checkIfUserBelongsToTheSameBusiness(data.userMongo, data.authToken, 'Driver', data.roles)),
@@ -72,6 +76,7 @@ class DriverValidatorHelper {
   static checkDriverUpdateDriverStateValidator$(driver, authToken, roles, userMongo) {
     return of({driver, authToken, roles, userMongo: userMongo})
     .pipe(
+      mergeMap(data => this.checkTokenValidity$().pipe(mapTo(data))),
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => this.checkIfUserIsTheSameUserLogged(data.driver, authToken, 'Driver')),
       tap(data => this.checkIfUserBelongsToTheSameBusiness(data.userMongo, data.authToken, 'Driver', data.roles)),
@@ -87,6 +92,7 @@ class DriverValidatorHelper {
   static checkDriverCreateDriverAuthValidator$(driver, authToken, roles, userMongo) {
     return of({driver, authToken, roles, userMongo: userMongo})
     .pipe(
+      mergeMap(data => this.checkTokenValidity$().pipe(mapTo(data))),
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => { if (!data.authInput || !data.authInput.username.trim().match(userNameRegex)) this.throwCustomError$(INVALID_USERNAME_FORMAT_ERROR_CODE)}),
       tap(data => { if (!data.userMongo) this.throwCustomError$(USER_NOT_FOUND_ERROR_CODE)}),
@@ -106,6 +112,7 @@ class DriverValidatorHelper {
   static checkDriverUpdateDriverAuthValidator$(driver, authToken, roles, userMongo) {
     return of({driver, authToken, roles, userMongo: userMongo})
     .pipe(
+      mergeMap(data => this.checkTokenValidity$().pipe(mapTo(data))),
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => { if (!data.userMongo) this.throwCustomError$(USER_NOT_FOUND_ERROR_CODE)}),
       tap(data => this.checkIfUserBelongsToTheSameBusiness(data.userMongo, data.authToken, 'Driver', data.roles)),
@@ -117,6 +124,7 @@ class DriverValidatorHelper {
   static checkDriverRemoveDriverAuthValidator$(driver, authToken, roles, userMongo) {
     return of({driver, authToken, roles, userMongo: userMongo})
     .pipe(
+      mergeMap(data => this.checkTokenValidity$().pipe(mapTo(data))),
       tap(data => { if (!data.driver) this.throwCustomError$(USER_MISSING_DATA_ERROR_CODE)}),
       tap(data => { if (!data.userMongo) this.throwCustomError$(USER_NOT_FOUND_ERROR_CODE)}),
       tap(data => { if (!data.userMongo.auth || !data.userMongo.auth.username) this.throwCustomError$(USER_DOES_NOT_HAVE_AUTH_CREDENTIALS_ERROR_CODE)}),
@@ -198,6 +206,19 @@ class DriverValidatorHelper {
   }
 
   /**
+   * Check token validity
+   */
+  static checkTokenValidity$(){
+    return TokenKeycloakDA.checkTokenValidity$()
+    .pipe(
+      catchError(error => {
+        console.log('An error ocurred checking keycloak token validity: ', error);
+        return this.throwCustomError$(INVALID_TOKEN_ERROR_CODE);
+      })
+    );
+  }
+
+  /**
    * Get the userkeycloak with the specified email
    * @param {*} keycloakResult 
    * @param {*} email 
@@ -212,14 +233,27 @@ class DriverValidatorHelper {
   static checkUsernameExistKeycloak$(user, username) {
     return DriverKeycloakDA.getUser$(username)
     .pipe(
-      mergeMap(userFound => {
-        if(userFound && userFound.length > 0){
-           return this.throwCustomError$(USERNAME_ALREADY_USED_CODE);
-         }
+      mergeMap(keycloakResult => {
+        const userKeycloak = this.searchUserKeycloakByUsername(keycloakResult, username);
+        if(userKeycloak){
+          return this.throwCustomError$(USERNAME_ALREADY_USED_CODE);
+        }
          return of(user);
        }
      )
     );
+  }
+
+    /**
+   * Searches user keycloak by username
+   * @param {*} keycloakResult 
+   * @param {*} username 
+   */
+  static searchUserKeycloakByUsername(keycloakResult, username) {
+    if (keycloakResult && keycloakResult.length > 0) {
+      return keycloakResult.find(userKeycloak => userKeycloak.username.toLowerCase() == username.toLowerCase());
+    }
+    return null;
   }
 
   static checkUserEmailExistKeycloak$(user, email) {
