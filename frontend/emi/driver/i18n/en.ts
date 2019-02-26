@@ -1,11 +1,16 @@
 export const locale = {
   lang: 'en',
   data: {
+    undefined: 'Undefined',
     DRIVER: {
       DRIVER_FILTERS: {
         SHOW_BLOCKED: 'Blocked',
         SHOW_INACTIVE: 'Inactive'
       },
+      CREATE_BLOCK: 'Create Block',
+      BLOCK_TYPE: 'Block Type',
+      BLOCK_DURATION: 'Block Duration',
+      BLOCK_COMMENTS: 'Comments',
       DETAIL_HEADER_NAME: 'Driver',
       DETAIL_HEADER_NEW: 'New Driver',
       TITLE: 'Drivers',
@@ -29,7 +34,7 @@ export const locale = {
           MEMBERSHIP: 'Membership',
           CREDENTIALS: 'Credentials'
         },
-        NO_HAVE_BLOCKS: 'The Driver Haven\'t Blocks',
+        NO_HAVE_BLOCKS: 'The driver haven\'t blocks',
         CREATED_BY: 'Created By',
         CREATED_IN: 'Created',
         EDITED_BY: 'Edited By',
@@ -39,7 +44,7 @@ export const locale = {
         GENDER_FEMALE: 'Female',
         PMR_TITLE: 'PRM',
         PMR: 'Reduced Mobility',
-        GENERAL_INFO: 'General Info',        
+        GENERAL_INFO: 'General Info',
         ENABLED: 'Enabled',
         DISABLED: 'Disabled',
         NAME: 'Name',
@@ -50,6 +55,15 @@ export const locale = {
           CC: 'Citizenship Card',
           PASSPORT: 'Passport'
         },
+        BLOCK_TYPES: {
+          BREACH_SERVICE: 'Breach of service',
+          BREACH_AGREEMENT: 'Breach of agreement',
+          DOORMAN_COMPLAINT: 'Doorman complaint'
+        },
+        BLOCK_COMMENT_REQUIRED: 'Comments field required',
+        BLOCK_COMMENT_MIN_LENGTH_ERROR: 'Comments require at least 50 caracters',
+        BLOCK_COMMENT_MAX_LENGTH_ERROR: 'Very long comment',
+        BLOCK_EXIST: 'Driver already have this block type',
         DOCUMENT: 'Document',
         EMAIL: 'Email',
         PHONE: 'Phone',
@@ -78,7 +92,7 @@ export const locale = {
         LANGUAGES_TITLE: 'Other Languages',
         LANGUAGES: {
           english: 'English'
-        }   
+        }
       },
       BLOCKED: 'Bloqueos',
       BLOCKS: {

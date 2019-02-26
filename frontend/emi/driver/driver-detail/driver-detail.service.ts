@@ -13,7 +13,9 @@ import {
   DriverCreateDriverAuth,
   DriverRemoveDriverAuth,
   DriverResetDriverPassword,
-  RemoveDriverBlocking
+  RemoveDriverBlocking,
+  InsertDriverBlock,
+  DriverDriverBlockAddedSubscription
 } from '../gql/driver.js';
 
 @Injectable()
@@ -64,7 +66,6 @@ export class DriverDetailService {
   }
 
   createDriverDriver$(driver: any) {
-    console.log('DRIVER ======> ', driver);
     return this.createOperation$(driver)
     .pipe(
       mergeMap(() => {
@@ -81,7 +82,6 @@ export class DriverDetailService {
   }
 
   updateDriverDriverGeneralInfo$(id: String, driverGeneralInfo: any) {
-    console.log('DRIVER ======> ', driverGeneralInfo);
     return this.updateOperation$(driverGeneralInfo)
     .pipe(
       mergeMap(() => {
@@ -186,8 +186,24 @@ export class DriverDetailService {
     });
   }
 
+  /**
+   * Insert a block to the driver 
+   * @param id driver id
+   * @param blockInput object
+   */
+  InsertDriverBlock$(id: String, blockInput: any) {
+    return this.gateway.apollo
+      .mutate<any>({
+        mutation: InsertDriverBlock,
+        variables: {
+          id: id,
+          input: blockInput
+        },
+        errorPolicy: 'all'
+      });
+  }
+
   removeDriverBlock$(id: String, blockKey: string) {
-    console.log('removeDriverBlock$', id, blockKey);
     return this.gateway.apollo
       .mutate<any>({
         mutation: RemoveDriverBlocking,
@@ -198,6 +214,19 @@ export class DriverDetailService {
         errorPolicy: 'all'
       });
   }
+
+  /**
+ * Event triggered when a business is created, updated or deleted.
+ */
+listenDriverBlockAdded$(driverId: string): Observable<any> {
+  return this.gateway.apollo
+  .subscribe({
+    query: DriverDriverBlockAddedSubscription,
+    variables: {
+      driverId: driverId
+    }
+  });
+}
 
   getDriverDriver$(entityId: string) {
     return this.gateway.apollo.query<any>({

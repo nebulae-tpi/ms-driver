@@ -15,6 +15,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { DriverBlocksComponent } from './driver-detail/driver-blocks/driver-blocks.component';
 import { DriverMembershipComponent } from './driver-detail/membership/driver-membership.component';
 import { DriverAuthComponent } from './driver-detail/auth-credentials/driver-auth.component';
+import { ManualBlockDialogComponent } from './driver-detail/driver-blocks/manual-block/manual-block.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
   ],
   declarations: [
     DialogComponent,
+    ManualBlockDialogComponent,
     DriverListComponent,
     DriverDetailComponent,
     DriverDetailGeneralInfoComponent,
@@ -42,7 +44,7 @@ const routes: Routes = [
     DriverBlocksComponent,
     DriverMembershipComponent
   ],
-  entryComponents: [DialogComponent],
+  entryComponents: [DialogComponent, ManualBlockDialogComponent],
   providers: [ DriverService, DriverListService, DriverDetailService, DatePipe]
 })
 

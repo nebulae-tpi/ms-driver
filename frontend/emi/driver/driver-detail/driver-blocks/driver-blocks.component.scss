@@ -13,7 +13,8 @@
   .item {
       position: relative;
       cursor: pointer;
-      height: 84px;
+      min-height: 40px;
+      max-height: 80px;
   }
 
   .mat-cell {
@@ -54,11 +55,7 @@
   background: #B9BBB9;
 }
 
-.selectedElement {
-  position: relative;
-  cursor: pointer;
-  height: 84px;
-}
+
 
 // Extract the palettes you need from the theme definition.
 

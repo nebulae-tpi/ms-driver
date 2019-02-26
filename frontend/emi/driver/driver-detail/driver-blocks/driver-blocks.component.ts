@@ -56,6 +56,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { DriverDetailService } from '../driver-detail.service';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { ToolbarService } from '../../../../toolbar/toolbar.service';
+import { ManualBlockDialogComponent } from './manual-block/manual-block.component';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -80,50 +81,59 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
   paginator: MatPaginator;
   tableSize: number;
   tablePage = 0;
-  tableCount = 10;
+  tableCount = 25;
 
   // Columns to show in the table
   displayedColumns = [
     'key',
-    'notes',
     'startTime',
     'endTime',
     'user',
     'actions'
   ];
 
-  blocks = [];
-
 
   constructor(
     private translationLoader: FuseTranslationLoaderService,
     private translate: TranslateService,
-    private formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
-    private router: Router,
-    private activatedRouter: ActivatedRoute,
     private DriverDetailservice: DriverDetailService,
     private dialog: MatDialog,
-    private toolbarService: ToolbarService
   ) {
       this.translationLoader.loadTranslations(english, spanish);
   }
 
 
   ngOnInit() {
-    this.DriverDetailservice.getDriverDriverBlocks$(this.driver._id)
-    .pipe(
-      map(r => JSON.parse(JSON.stringify(r.data.DriverDriverBlocks))),
-      tap(blocks =>  {
-        this.blocks = blocks;
-        this.dataSource.data = blocks;        
-      })
-    ).subscribe(() => {}, err => console.log(err), () => console.log('COMPLETADO'));
 
     this.driverblocksForm = new FormGroup({
       fuel: new FormControl(this.driver ? (this.driver.blocks || {}).fuel : ''),
       capacity: new FormControl(this.driver ? (this.driver.blocks || {}).capacity : '')
     });
+
+    this.DriverDetailservice.getDriverDriverBlocks$(this.driver._id)
+      .pipe(
+        map(r => JSON.parse(JSON.stringify(r.data.DriverDriverBlocks))),
+        tap(blocks => {
+          console.log('getDriverDriverBlocks$', blocks);
+          this.dataSource.data = blocks;
+        }),
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(() => { }, err => console.log(err), () => console.log('COMPLETADO'));
+
+
+
+
+    this.DriverDetailservice.listenDriverBlockAdded$(this.driver._id)
+      .pipe(
+        map(res => res.data.DriverDriverBlockAddedSubscription),
+        tap(r => console.log(' listenDriverBlockAdded SUSBCRIPTION ==> ', r)),
+        tap(r => this.dataSource.data = [...this.dataSource.data, r] ),
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(OK => console.log(OK), err => console.log(err), () => console.log('COMPLETED'));
+
   }
 
 
@@ -232,8 +242,28 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
 
   }
 
-  insertBlock(){
-    console.log('####### INSERTANDO UN BLOQUEO');
+
+
+  createBlock(){
+    return this.dialog
+      // Opens confirm dialog
+      .open(ManualBlockDialogComponent, {
+        width: '70%',
+        height: '80%',
+        data: {
+          forbidddenBlockKeys: this.dataSource.data.map((e: any) => e.key )
+        }
+      })
+      .afterClosed()
+      .pipe(
+        filter(okButton => okButton),
+        tap(response => console.log('DIALOG RESPONSE ===>', response)),
+        mergeMap(r => this.DriverDetailservice.InsertDriverBlock$(this.driver._id, r) ),
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe();
+
+
   }
 
 }

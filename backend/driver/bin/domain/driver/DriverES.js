@@ -121,14 +121,21 @@ class DriverES {
         return of(driverBlockAddedEvt)
         .pipe(
             map(() => ({
+                ...driverBlockAddedEvt.data,
                 driverId: driverBlockAddedEvt.aid,
-                blockKey: driverBlockAddedEvt.data.blockKey,
-                user: driverBlockAddedEvt.user
+                user: driverBlockAddedEvt.user,
+                
+                // blockKey: driverBlockAddedEvt.data.blockKey,                
+                // notes: driverBlockAddedEvt.data.notes,
+                // startTime: driverBlockAddedEvt.data.startTime,
+                // endTime: driverBlockAddedEvt.data.endTime,
             }) ),
             mergeMap(blockInfo => forkJoin(
                 DriverBlocksDA.addBlockToDriver$(blockInfo),
-                DriverDA.insertBlock$(blockInfo)
-
+                DriverDA.insertBlock$(blockInfo),
+                broker.send$(MATERIALIZED_VIEW_TOPIC, 'DriverBlockAdded',
+                    { ...blockInfo, key: blockInfo.blockKey }
+                )
             )),
             //tap(r => console.log(r.result))
         )
