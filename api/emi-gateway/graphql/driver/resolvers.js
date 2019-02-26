@@ -277,6 +277,26 @@ module.exports = {
                 mergeMap(response => getResponseFromBackEnd$(response))
             ).toPromise();
         },
+        DriverInsertDriverBlock(root, args, context) {
+          return RoleValidator.checkPermissions$(
+            context.authToken.realm_access.roles,
+            "Driver", "DriverAddDriverBlocking",
+            PERMISSION_DENIED_ERROR_CODE, "Permission denied",
+            ["PLATFORM-ADMIN"]
+          ).pipe(
+            mergeMap(() =>
+              context.broker.forwardAndGetReply$(
+                "Driver",
+                "emigateway.graphql.mutation.driverAddDriverBlocking",
+                { root, args, jwt: context.encodedToken },
+                2000
+              )
+            ),
+            catchError(err => handleError$(err, "updateDriverState")),
+            mergeMap(response => getResponseFromBackEnd$(response))
+          ).toPromise();
+        }
+
     },
 
     //// SUBSCRIPTIONS ///////
@@ -290,9 +310,19 @@ module.exports = {
                     return true;
                 }
             )
-        }
+        },
+        DriverDriverBlockAddedSubscription: {
+          subscribe: withFilter(
+              (payload, variables, context, info) => {
+                  return pubsub.asyncIterator("DriverDriverBlockAddedSubscription");
+              },
+              (payload, variables, context, info) => {
+                return variables.driverId == payload.DriverDriverBlockAddedSubscription.driverId;
+              }
+          )
+      }
+    }   
 
-    }
 };
 
 //// SUBSCRIPTIONS SOURCES ////
@@ -304,6 +334,13 @@ const eventDescriptors = [
         dataExtractor: (evt) => evt.data,// OPTIONAL, only use if needed
         onError: (error, descriptor) => console.log(`Error processing ${descriptor.backendEventName}`),// OPTIONAL, only use if needed
         onEvent: (evt, descriptor) => console.log(`Event of type  ${descriptor.backendEventName} arraived`),// OPTIONAL, only use if needed
+    },
+    {
+      backendEventName: 'DriverBlockAdded',
+      gqlSubscriptionName: 'DriverDriverBlockAddedSubscription',
+      dataExtractor: (evt) => evt.data,// OPTIONAL, only use if needed
+      onError: (error, descriptor) => console.log(`Error processing ${descriptor.backendEventName}`),// OPTIONAL, only use if needed
+      onEvent: (evt, descriptor) => console.log(`Event of type  ${descriptor.backendEventName} arraived`),// OPTIONAL, only use if needed
     },
 ];
 
@@ -321,7 +358,7 @@ eventDescriptors.forEach(descriptor => {
                     descriptor.onEvent(evt, descriptor);
                 }
                 const payload = {};
-                payload[descriptor.gqlSubscriptionName] = descriptor.dataExtractor ? descriptor.dataExtractor(evt) : evt.data
+                payload[descriptor.gqlSubscriptionName] = descriptor.dataExtractor ? descriptor.dataExtractor(evt) : evt.data;
                 pubsub.publish(descriptor.gqlSubscriptionName, payload);
             },
 
@@ -329,10 +366,7 @@ eventDescriptors.forEach(descriptor => {
                 if (descriptor.onError) {
                     descriptor.onError(error, descriptor);
                 }
-                console.error(
-                    `Error listening ${descriptor.gqlSubscriptionName}`,
-                    error
-                );
+                console.error( `Error listening ${descriptor.gqlSubscriptionName}`, error );
             },
 
             () => console.log( `${descriptor.gqlSubscriptionName} listener STOPPED` )

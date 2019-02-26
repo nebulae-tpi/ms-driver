@@ -37,9 +37,9 @@ class DriverBlocksDA {
     return defer(() => collection.deleteMany({driverId: driverId, key: blockKey}))
   }
 
-  static addBlockToDriver$({driverId, blockKey, user}){
+  static addBlockToDriver$({driverId, blockKey, user, startTime, endTime, notes}){
     const collection = mongoDB.db.collection(COLLECTION_NAME);
-    return defer(() => collection.insertOne({driverId: driverId, key: blockKey, user}))
+    return defer(() => collection.insertOne({key: blockKey, driverId, user, startTime, endTime, notes}))
     .pipe(
       catchError(err => {
         if(err.code == 11000){

@@ -297,9 +297,11 @@ export class DriverListComponent implements OnInit, OnDestroy {
     )
     .subscribe(([list, size]) => {
       this.dataSource.data = list;
+      console.log(list);
       this.tableSize = size;
     });
   }
+
 
   /**
    * Gets the driver list

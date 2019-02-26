@@ -192,6 +192,10 @@ class GraphQlService {
       {
         aggregateType: "Driver",
         messageType: "emigateway.graphql.query.driverDriverBlocks"
+      },
+      {
+        aggregateType: "Driver",
+        messageType: "emigateway.graphql.mutation.driverAddDriverBlocking"
       }
     ];
   }
@@ -246,10 +250,14 @@ class GraphQlService {
         fn: DriverCQRS.removeDriverBlock$,
         obj: DriverCQRS
       },
+      "emigateway.graphql.mutation.driverAddDriverBlocking": {
+        fn: DriverCQRS.addDriverBlock$,
+        obj: DriverCQRS
+      },
       "emigateway.graphql.query.driverDriverBlocks": {
         fn: DriverCQRS.getDriverBlocks$,
         obj: DriverCQRS
-      }
+      }      
     };
   }
 }

@@ -56,7 +56,7 @@ import { FuseTranslationLoaderService } from '../../../../../core/services/trans
 import { KeycloakService } from 'keycloak-angular';
 import { DriverDetailService } from '../driver-detail.service';
 import { DialogComponent } from '../../dialog/dialog.component';
-import { ToolbarService } from "../../../../toolbar/toolbar.service";
+import { ToolbarService } from '../../../../toolbar/toolbar.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -75,7 +75,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
   driverGeneralInfoForm: any;
   driverStateForm: any;
 
-  documentTypes= ['CC', 'PASSPORT'];
+  documentTypes = ['CC', 'PASSPORT'];
   genders = ['FEMALE', 'MALE'];
 
   constructor(
@@ -94,7 +94,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    const englishState = this.driver ? this.driver.generalInfo.languages.find(language => language.name === 'english'): false;
+    const englishState = this.driver ? this.driver.generalInfo.languages.find(language => language.name === 'english') : false;
     this.driverGeneralInfoForm = new FormGroup({
       documentType: new FormControl(this.driver ? (this.driver.generalInfo || {}).documentType : '', [Validators.required]),
       document: new FormControl(this.driver ? (this.driver.generalInfo || {}).document : '', [Validators.required]),
@@ -121,7 +121,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
 
   createDriver() {
     this.toolbarService.onSelectedBusiness$
-    .pipe(      
+    .pipe(
       tap(selectedBusiness => {
         if (!selectedBusiness || selectedBusiness.id == null){
           this.showSnackBar('DRIVER.SELECT_BUSINESS');
@@ -130,7 +130,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
       take(1),
       filter(selectedBusiness => selectedBusiness != null && selectedBusiness.id != null),
       mergeMap(selectedBusiness => {
-        return this.showConfirmationDialog$("DRIVER.CREATE_MESSAGE", "DRIVER.CREATE_TITLE")
+        return this.showConfirmationDialog$('DRIVER.CREATE_MESSAGE', 'DRIVER.CREATE_TITLE')
         .pipe(
           map(() => this.driverGeneralInfoForm.getRawValue()),
           map(generalInfoRawValue => ({
@@ -149,7 +149,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
           }),
           mergeMap(resp => this.graphQlAlarmsErrorHandler$(resp)),
           filter((resp: any) => !resp.errors || resp.errors.length === 0),
-        )
+        );
       }),
       takeUntil(this.ngUnsubscribe)
     ).subscribe(result => {
@@ -163,7 +163,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   updateDriverGeneralInfo() {
-    this.showConfirmationDialog$("DRIVER.UPDATE_MESSAGE", "DRIVER.UPDATE_TITLE")
+    this.showConfirmationDialog$('DRIVER.UPDATE_MESSAGE', 'DRIVER.UPDATE_TITLE')
       .pipe(
         mergeMap(() => {
           const generalInfoinput = {
@@ -199,7 +199,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
     if (this.pageType === 'new') {
       return;
     }
-    this.showConfirmationDialog$("DRIVER.UPDATE_MESSAGE", "DRIVER.UPDATE_TITLE")
+    this.showConfirmationDialog$('DRIVER.UPDATE_MESSAGE', 'DRIVER.UPDATE_TITLE')
       .pipe(
         mergeMap(ok => {
           return this.DriverDetailservice.updateDriverDriverState$(this.driver._id, this.driverStateForm.getRawValue().state);
@@ -218,7 +218,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
 
   showConfirmationDialog$(dialogMessage, dialogTitle) {
     return this.dialog
-      //Opens confirm dialog
+      // Opens confirm dialog
       .open(DialogComponent, {
         data: {
           dialogMessage,
@@ -263,8 +263,8 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
               this.showMessageSnackbar('ERRORS.' + errorDetail.message.code);
             });
           } else {
-            response.errors.forEach(error => {
-              this.showMessageSnackbar('ERRORS.' + error.message.code);
+            response.errors.forEach((err: any) => {
+              this.showMessageSnackbar('ERRORS.' + err.message.code);
             });
           }
         });
@@ -278,7 +278,7 @@ export class DriverDetailGeneralInfoComponent implements OnInit, OnDestroy {
    * @param detailMessageKey Key of the detail message to i18n
    */
   showMessageSnackbar(messageKey, detailMessageKey?) {
-    let translationData = [];
+    const translationData = [];
     if (messageKey) {
       translationData.push(messageKey);
     }

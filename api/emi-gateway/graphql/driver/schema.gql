@@ -155,10 +155,17 @@ input DriverAuthInput {
 type DriverDriverBlock {
   key: String
   notes: String
-  vehicleId: String
+  driverId: String
   startTime: BigInt
   endTime: BigInt
   user: String
+}
+
+input DriverDriverBlockInput {
+  key: String
+  notes: String
+  startTime: BigInt
+  endTime: BigInt
 }
 
 type Query {
@@ -189,9 +196,13 @@ type Mutation {
   DriverResetDriverPassword(id: ID!, input: DriverPasswordInput): CommandResponse  
   "Remove one driver block"
   DriverRemoveDriverBlocking(id: ID!, blockKey: String!): CommandResponse
+  "Insert one driver block"
+  DriverInsertDriverBlock(id: ID!, input: DriverDriverBlockInput!): CommandResponse
 }
 
 type Subscription {
   "This events is triggered when a Driver is created or updated"
-  DriverDriverUpdatedSubscription: DriverDriver  
+  DriverDriverUpdatedSubscription: DriverDriver
+  "Driver Block added"
+  DriverDriverBlockAddedSubscription(driverId: String!): DriverDriverBlock
 }

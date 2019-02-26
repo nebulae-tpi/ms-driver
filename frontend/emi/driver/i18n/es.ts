@@ -1,11 +1,16 @@
 export const locale = {
   lang: 'es',
   data: {
+    undefined: 'Indefinido',
     DRIVER: {
       DRIVER_FILTERS: {
         SHOW_BLOCKED: 'Bloqueados',
         SHOW_INACTIVE: 'Inactivos'
       },
+      CREATE_BLOCK: 'Crear Bloqueo',
+      BLOCK_TYPE: 'Tipo de Bloqueo',
+      BLOCK_DURATION: 'Duración de bloqueo',
+      BLOCK_COMMENTS: 'Comentarios',
       DETAIL_HEADER_NAME: 'CONDUCTOR',
       DETAIL_HEADER_NEW: 'Nuevo Conductor',
       TITLE: 'Conductor',
@@ -50,6 +55,15 @@ export const locale = {
           CC: 'Cédula de Ciudadania',
           PASSPORT: 'Pasaporte'
         },
+        BLOCK_TYPES: {
+          BREACH_SERVICE: 'Incumplimiento del servicio',
+          BREACH_AGREEMENT: 'Incumplimiento de acuerdo empresarial',
+          DOORMAN_COMPLAINT: 'Queja del portero'
+        },
+        BLOCK_COMMENT_REQUIRED: 'Comentario requerido',
+        BLOCK_COMMENT_MIN_LENGTH_ERROR: 'Se requieren al menos 50 caracteres',
+        BLOCK_COMMENT_MAX_LENGTH_ERROR: 'Comenterio demasiado largo',
+        BLOCK_EXIST: 'El conductor ya posee un bloqueo de este tipo',
         DOCUMENT: 'Documento',
         EMAIL: 'Email',
         PHONE: 'Teléfono',
@@ -78,7 +92,7 @@ export const locale = {
         LANGUAGES_TITLE: 'Otros Idiomas',
         LANGUAGES: {
           english: 'Inglés'
-        }   
+        }
       },
       BLOCKED: 'Bloqueos',
       BLOCKS: {

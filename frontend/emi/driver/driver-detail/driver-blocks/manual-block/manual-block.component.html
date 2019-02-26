@@ -1,0 +1,54 @@
+<div fxFlex="100" fxLayout="row wrap" >
+
+    <h1 fxFlex="100" mat-dialog-title>{{ 'DRIVER.CREATE_BLOCK' | translate }}</h1>
+
+    <!-- <mat-dialog-content fxFlex="100"> -->
+      <form name="manualBlockForm" [formGroup]="manualBlockForm" fxFlex="100" fxLayout="row wrap"
+        fxLayoutAlign="center center">
+
+        <!-- BLOCK TYPE -->
+        <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="pr-8 pl-8">
+          <mat-select name="block" formControlName="block" placeholder="{{'DRIVER.BLOCK_TYPE' | translate}}">
+            <mat-option *ngFor="let block of blockTypes" [value]="block">
+              {{ 'DRIVER.DETAILS.BLOCK_TYPES.'+ block.key | translate }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="manualBlockForm.hasError('blockExist', ['block'])">
+              {{'DRIVER.DETAILS.BLOCK_EXIST' | translate}}
+            </mat-error>
+        </mat-form-field>
+        <!-- BLOCK TYPE -->
+
+        <!-- BLOCK DURATION -->
+        <mat-form-field *ngIf="manualBlockForm.controls['block'].value" fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+          <input matInput readonly placeholder="{{'DRIVER.BLOCK_DURATION' | translate}}"
+            value="{{ manualBlockForm.controls['block'].value.duration ? (manualBlockForm.controls['block'].value.duration / 3600000 ) + ' H'  : 'undefined' | translate }}">
+        </mat-form-field>
+        <!-- BLOCK DURATION -->
+
+        <!-- BLOCK COMMENTS -->
+        <mat-form-field fxFlex="100" class="p-8">
+          <textarea maxlength="500" minlength="50" rows="5" name="comment" formControlName="comment" matInput
+            placeholder="{{'DRIVER.BLOCK_COMMENTS' | translate}}"></textarea>
+          <mat-error *ngIf="manualBlockForm.hasError('required', ['comment'])">
+            {{'DRIVER.DETAILS.BLOCK_COMMENT_REQUIRED' | translate}}
+          </mat-error>
+          <mat-error *ngIf="manualBlockForm.hasError('minlength', ['comment'])">
+            {{'DRIVER.DETAILS.BLOCK_COMMENT_MIN_LENGTH_ERROR' | translate}}
+          </mat-error>
+          <mat-error *ngIf="manualBlockForm.hasError('maxlength', ['comment'])">
+            {{'DRIVER.DETAILS.BLOCK_COMMENT_MAX_LENGTH_ERROR' | translate}}
+          </mat-error>
+        </mat-form-field>
+        <!-- BLOCK COMMENTS -->
+
+      </form>
+    <!-- </mat-dialog-content> -->
+
+    <mat-dialog-actions fxFlex="100">
+      <button mat-raised-button [disabled]="!manualBlockForm.valid" (click)="pushButton(true)">Ok</button>
+      <button mat-raised-button mat-dialog-close color="warn" (click)="pushButton(false)">{{'DRIVER.CANCEL' | translate}}</button>
+    </mat-dialog-actions>
+
+</div>
+

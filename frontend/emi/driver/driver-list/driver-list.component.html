@@ -38,7 +38,7 @@
               <mat-form-field>
                 <input matInput placeholder="{{'DRIVER.NAME' | translate}}" formControlName="name" id="name" maxlength="20" />
               </mat-form-field>
-          
+
               <mat-form-field>
                 <input maxlength="20" matInput placeholder="{{'DRIVER.LASTNAME' | translate}}" formControlName="lastname"/>
               </mat-form-field>
@@ -51,14 +51,14 @@
                 <input matInput placeholder="{{'DRIVER.CREATOR_USER' | translate}}" formControlName="creatorUser" id="creatorUser"
                   maxlength="20" />
               </mat-form-field> -->
-          
+
               <mat-form-field>
                 <input matInput [matDatepicker]="pickerCreationDate" placeholder="{{'DRIVER.CREATION_DATE' | translate}}"
                   formControlName="creationTimestamp" />
                 <mat-datepicker-toggle matSuffix [for]="pickerCreationDate"></mat-datepicker-toggle>
                 <mat-datepicker #pickerCreationDate></mat-datepicker>
               </mat-form-field>
-          
+
             </div>
           </form>
 
@@ -82,7 +82,7 @@
             aria-label="Toggle Sidenav">
             <mat-icon>menu</mat-icon>
           </button>
-        
+
         </div>
 
         <button mat-raised-button class="mat-white-bg" (click)="goToDetail()">
@@ -169,7 +169,7 @@
               <mat-cell *cdkCellDef="let element" fxHide fxShow.gt-xs>
                 <p class="text-truncate">{{  element.modifierUser }}</p>
               </mat-cell>
-          </ng-container>  
+          </ng-container>
 
 
           <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
@@ -180,10 +180,10 @@
           </mat-row>
 
         </mat-table>
-        
+
         <mat-paginator #paginator [length]="tableSize" [pageIndex]="tablePage" [pageSize]="tableCount" [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
-        
+
 
       </div>
       <!-- / CONTENT CARD -->

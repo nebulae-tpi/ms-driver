@@ -11,7 +11,7 @@ const MATERIALIZED_VIEW_TOPIC = "materialized-view-updates";
 const GraphqlResponseTools = require('../../tools/GraphqlResponseTools');
 const RoleValidator = require("../../tools/RoleValidator");
 const { of, interval } = require("rxjs");
-const { take, mergeMap, catchError, map, toArray, mapTo, delay } = require('rxjs/operators');
+const { take, mergeMap, catchError, map, toArray, mapTo, delay, tap } = require('rxjs/operators');
 const {
   CustomError,
   DefaultError,
@@ -477,6 +477,37 @@ class DriverCQRS {
           aggregateType: "Driver",
           aggregateId: args.id,
           data: { blockKey: args.blockKey},
+          user: authToken.preferred_username
+        })
+      )),
+      map(() => ({ code: 200, message: `Driver with id: ${args.id} has been updated` })),
+      mergeMap(r => GraphqlResponseTools.buildSuccessResponse$(r)),
+      catchError(err => GraphqlResponseTools.handleError$(err))
+    );
+
+  }
+
+  addDriverBlock$({ root, args, jwt }, authToken) {
+    console.log("addDriverBlock$", args);
+    return RoleValidator.checkPermissions$(
+      authToken.realm_access.roles,
+      "driverBlock",
+      "addDriverBlock$",
+      PERMISSION_DENIED_ERROR_CODE,
+      ["PLATFORM-ADMIN"]
+    ).pipe(
+      mergeMap(() => eventSourcing.eventStore.emitEvent$(
+        new Event({
+          eventType: "DriverBlockAdded",
+          eventTypeVersion: 1,
+          aggregateType: "Driver",
+          aggregateId: args.id,
+          data: {
+            blockKey: args.input.key,
+            startTime: args.input.startTime,
+            endTime: args.input.endTime,
+            notes: args.input.notes
+          },
           user: authToken.preferred_username
         })
       )),

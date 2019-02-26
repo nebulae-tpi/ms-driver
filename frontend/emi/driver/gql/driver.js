@@ -7,7 +7,7 @@ export const DriverDriverBlocks = gql`
     DriverDriverBlocks(id: $id) {
       key
       notes
-      vehicleId
+      driverId
       startTime
       endTime
       user
@@ -117,6 +117,15 @@ export const RemoveDriverBlocking = gql `
   }
 `;
 
+export const InsertDriverBlock = gql `
+  mutation DriverInsertDriverBlock($id: ID!, $input: DriverDriverBlockInput!){
+    DriverInsertDriverBlock(id: $id, input: $input){
+      code
+      message
+    }
+  }
+`;
+
 export const DriverUpdateDriverState = gql `
   mutation DriverUpdateDriverState($id: ID!, $newState: Boolean!){
     DriverUpdateDriverState(id: $id, newState: $newState){
@@ -187,6 +196,19 @@ export const DriverDriverUpdatedSubscription = gql`
       creatorUser
       modificationTimestamp
       modifierUser
+    }
+  }
+`;
+
+export const DriverDriverBlockAddedSubscription = gql`
+  subscription DriverDriverBlockAddedSubscription($driverId: String!){
+    DriverDriverBlockAddedSubscription(driverId: $driverId){
+      key
+      notes
+      driverId
+      startTime
+      endTime
+      user
     }
   }
 `;

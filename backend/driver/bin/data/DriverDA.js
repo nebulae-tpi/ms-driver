@@ -261,7 +261,7 @@ class DriverDA {
     return this.getDriverByFilter$(query);
   }
 
-  static insertBlock$({ driverId, blockKey  }){
+  static insertBlock$({ driverId, blockKey }){
     const collection = mongoDB.db.collection(COLLECTION_NAME);
     return defer(() => collection.updateOne(
       { _id: driverId },
