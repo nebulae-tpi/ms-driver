@@ -124,7 +124,6 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
 
 
 
-
     this.DriverDetailservice.listenDriverBlockAdded$(this.driver._id)
       .pipe(
         map(res => res.data.DriverDriverBlockAddedSubscription),
