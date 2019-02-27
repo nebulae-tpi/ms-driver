@@ -9,7 +9,7 @@ export const locale = {
       },
       CREATE_BLOCK: 'Crear Bloqueo',
       REMOVE_BLOCK_TITLE: 'Eliminar Bloqueo',
-      REMOVE_BLOCK_MSG: 'Estás seguro que desea eliminar el bloqueo?',
+      REMOVE_BLOCK_MSG: 'Estás seguro que deseas retirar el bloqueo?',
       BLOCK_TYPE: 'Tipo de Bloqueo',
       BLOCK_DURATION: 'Duración de bloqueo',
       BLOCK_COMMENTS: 'Comentarios',

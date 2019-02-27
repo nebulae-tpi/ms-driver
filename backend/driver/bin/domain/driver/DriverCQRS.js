@@ -42,7 +42,7 @@ class DriverCQRS {
       "Driver",
       "getDriver",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
@@ -66,7 +66,7 @@ class DriverCQRS {
       "Driver",
       "getDriverList",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
@@ -94,7 +94,7 @@ class DriverCQRS {
       "Driver",
       "getDriverListSize",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
@@ -446,7 +446,7 @@ class DriverCQRS {
       "driverBlocks",
       "getDriverBlocks$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
       // map(() => [{
       //   key: 'PICO_Y_PLACA',

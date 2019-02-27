@@ -3,12 +3,13 @@
   <div *ngIf="dataSource.data && dataSource.data.length == 0" style="font-size: 18px" fxFlex="100" fxLayoutAlign="space-around center" class="mr-12"
     fxLayout="row wrap">
     <p class="m-8"> {{ 'DRIVER.DETAILS.NO_HAVE_BLOCKS' | translate }} </p>
-    <button class="m-8" mat-raised-button (click)="createBlock()">
+    <button *ngIf="userRoles.includes('DISCIPLINARY-COMMITTEE') || userRoles.includes('PLATFORM-ADMIN') || userRoles.includes('BUSINESS-OWNER')" class="m-8" mat-raised-button (click)="createBlock()">
       {{'DRIVER.CREATE_BLOCK' | translate}}
     </button>
   </div>
 
-  <div *ngIf="dataSource.data && dataSource.data.length > 0" fxLayoutAlign="end end" fxFlex="100">
+  <div *ngIf="dataSource.data && dataSource.data.length > 0 && ( userRoles.includes('DISCIPLINARY-COMMITTEE') || userRoles.includes('PLATFORM-ADMIN') || userRoles.includes('BUSINESS-OWNER') ) "
+    fxLayoutAlign="end end" fxFlex="100">
     <button class="m-8" mat-raised-button (click)="createBlock()">
       {{'DRIVER.CREATE_BLOCK' | translate}}
     </button>

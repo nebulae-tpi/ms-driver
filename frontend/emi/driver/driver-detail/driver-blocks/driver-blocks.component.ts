@@ -91,6 +91,7 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
     'user',
     'actions'
   ];
+  userRoles = [];
 
 
   constructor(
@@ -99,12 +100,16 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
     public snackBar: MatSnackBar,
     private DriverDetailservice: DriverDetailService,
     private dialog: MatDialog,
+    private keycloakService: KeycloakService
   ) {
       this.translationLoader.loadTranslations(english, spanish);
   }
 
 
   ngOnInit() {
+
+    this.userRoles = this.keycloakService.getUserRoles();
+    console.log(this.userRoles);
 
     this.driverblocksForm = new FormGroup({
       fuel: new FormControl(this.driver ? (this.driver.blocks || {}).fuel : ''),
@@ -165,7 +170,6 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
       .pipe(
         tap((resp: any) => {
           this.showSnackBarError(resp);
-
           return resp;
         })
       );
@@ -258,7 +262,8 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
       .pipe(
         filter(okButton => okButton),
         tap(response => console.log('DIALOG RESPONSE ===>', response)),
-        mergeMap(r => this.DriverDetailservice.InsertDriverBlock$(this.driver._id, r) ),
+        mergeMap(r => this.DriverDetailservice.InsertDriverBlock$(this.driver._id, r)),
+        mergeMap(r => this.graphQlAlarmsErrorHandler$(r)),
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe();
