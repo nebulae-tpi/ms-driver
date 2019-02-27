@@ -345,7 +345,6 @@ const eventDescriptors = [
 ];
 
 
-
 /**
  * Connects every backend event to the right GQL subscription
  */
