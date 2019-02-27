@@ -8,6 +8,8 @@ export const locale = {
         SHOW_INACTIVE: 'Inactive'
       },
       CREATE_BLOCK: 'Create Block',
+      REMOVE_BLOCK_TITLE: 'Remove Block',
+      REMOVE_BLOCK_MSG: 'Are you sure you want to remove the block?',
       BLOCK_TYPE: 'Block Type',
       BLOCK_DURATION: 'Block Duration',
       BLOCK_COMMENTS: 'Comments',

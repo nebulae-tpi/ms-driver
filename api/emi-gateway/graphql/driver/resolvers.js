@@ -263,7 +263,7 @@ module.exports = {
               context.authToken.realm_access.roles,
               "Driver", "DriverRemoveDriverBlocking",
               PERMISSION_DENIED_ERROR_CODE, "Permission denied",
-              ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+              ["PLATFORM-ADMIN", "BUSINESS-OWNER", "DISCIPLINARY_COMMITTEE"]
             ).pipe(
                 mergeMap(() =>
                   context.broker.forwardAndGetReply$(
@@ -282,7 +282,7 @@ module.exports = {
             context.authToken.realm_access.roles,
             "Driver", "DriverAddDriverBlocking",
             PERMISSION_DENIED_ERROR_CODE, "Permission denied",
-            ["PLATFORM-ADMIN"]
+            ["PLATFORM-ADMIN", "BUSINESS-OWNER", "DISCIPLINARY_COMMITTEE"]
           ).pipe(
             mergeMap(() =>
               context.broker.forwardAndGetReply$(

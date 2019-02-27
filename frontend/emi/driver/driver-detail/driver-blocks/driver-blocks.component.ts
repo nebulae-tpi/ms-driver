@@ -228,17 +228,17 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  removeBlock(block){
-    console.log('REMOVING ...', block);
-    this.DriverDetailservice.removeDriverBlock$(this.driver._id, block.key)
-    .pipe(
-      tap(r => console.log('RESULTADO DE LA MUTACION', r)),
-      tap(() => {
-        this.dataSource.data = this.dataSource.data.filter((e: any) => e.key !== block.key);
-      })
-    )
-    .subscribe(() => {}, err => console.log(err), () => console.log('TERMINADO'));
-
+  removeBlock(block) {
+    this.showConfirmationDialog$('DRIVER.REMOVE_BLOCK_MSG', 'DRIVER.REMOVE_BLOCK_TITLE')
+      .pipe(
+        filter(response => response),
+        mergeMap(() => this.DriverDetailservice.removeDriverBlock$(this.driver._id, block.key)),
+        tap(() => {
+          this.dataSource.data = this.dataSource.data.filter((e: any) => e.key !== block.key);
+        }),
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(() => { }, err => console.log(err), () => {} );
   }
 
 

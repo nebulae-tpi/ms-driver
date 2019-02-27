@@ -468,7 +468,7 @@ class DriverCQRS {
       "driverBlock",
       "removeDriverBlock$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "DISCIPLINARY_COMMITTEE"]
     ).pipe(
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -493,7 +493,7 @@ class DriverCQRS {
       "driverBlock",
       "addDriverBlock$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "DISCIPLINARY_COMMITTEE"]
     ).pipe(
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
