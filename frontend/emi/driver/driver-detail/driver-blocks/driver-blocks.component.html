@@ -67,7 +67,7 @@
        <ng-container cdkColumnDef="actions">
             <mat-header-cell *cdkHeaderCellDef fxFlex="20"  fxLayoutAlign="center center">{{ "DRIVER.BLOCKS.ACTIONS" | translate }}
             </mat-header-cell>
-            <mat-cell *cdkCellDef="let block" fxLayoutAlign="center center" fxFlex="20">
+            <mat-cell *cdkCellDef="let block" (click)="$event.stopPropagation()" fxLayoutAlign="center center" fxFlex="20">
               <button mat-icon-button (click)="removeBlock(block)">
                 <mat-icon>delete</mat-icon>
               </button>
