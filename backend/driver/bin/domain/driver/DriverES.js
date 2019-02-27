@@ -117,7 +117,6 @@ class DriverES {
     }
 
     handleDriverBlockAdded$(driverBlockAddedEvt){
-        console.log("handleDriverBlockAdded$", driverBlockAddedEvt.data);
         return of(driverBlockAddedEvt)
         .pipe(
             map(() => ({

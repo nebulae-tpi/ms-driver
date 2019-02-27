@@ -250,6 +250,7 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
         width: '70%',
         height: '80%',
         data: {
+          mode: 'NEW',
           forbidddenBlockKeys: this.dataSource.data.map((e: any) => e.key )
         }
       })
@@ -261,7 +262,27 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe();
+  }
 
+  showBlockInfo(block: any) {
+    console.log('SHOW BLOCK INFO', block);
+    return this.dialog
+      .open(ManualBlockDialogComponent, {
+        width: '70%',
+        height: '80%',
+        data: {
+          mode: 'VIEW',
+          block: block
+        }
+      })
+      .afterClosed()
+      .pipe(
+        filter(okButton => okButton),
+        tap(response => console.log('DIALOG RESPONSE ===>', response)),
+        mergeMap(r => this.DriverDetailservice.InsertDriverBlock$(this.driver._id, r)),
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe();
 
   }
 

@@ -140,11 +140,11 @@
 
       <div class="mt-16">
         <button mat-raised-button *ngIf="pageType === 'new'" (click)="createDriver()"
-          disabled="driverGeneralInfoForm.invalid || driverGeneralInfoForm.pristine">
+          [disabled]="driverGeneralInfoForm.invalid || driverGeneralInfoForm.pristine">
           {{'DRIVER.CREATE' | translate}}
         </button>
         <button mat-raised-button *ngIf="pageType === 'edit'" (click)="updateDriverGeneralInfo()"
-          disabled="driverGeneralInfoForm.invalid || driverGeneralInfoForm.pristine">
+          [disabled]="driverGeneralInfoForm.invalid || driverGeneralInfoForm.pristine">
           {{'DRIVER.UPDATE' | translate}}
         </button>
       </div>

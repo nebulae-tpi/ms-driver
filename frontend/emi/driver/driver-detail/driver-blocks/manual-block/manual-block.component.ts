@@ -28,12 +28,16 @@ export class ManualBlockDialogComponent implements OnInit {
     // { key: 'NON_PAYMENT', duration: undefined },
   ];
   forbidddenBlockKeys = [];
+  mode: string;
+  block: any;
 
   constructor(
     private dialogRef: MatDialogRef<ManualBlockDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       console.log('forbidddenBlockKeys ==>', data.forbidddenBlockKeys);
       this.forbidddenBlockKeys = data.forbidddenBlockKeys;
+      this.mode = data.mode;
+      this.block = data.block;
   }
 
   ngOnInit() {

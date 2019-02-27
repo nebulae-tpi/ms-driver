@@ -1,10 +1,11 @@
 <div fxFlex="100" fxLayout="row wrap" >
 
-    <h1 fxFlex="100" mat-dialog-title>{{ 'DRIVER.CREATE_BLOCK' | translate }}</h1>
+    <h1 *ngIf="mode == 'NEW'" fxFlex="100" mat-dialog-title>{{ 'DRIVER.CREATE_BLOCK' | translate }}</h1>
+    <h1 *ngIf="mode == 'VIEW'" fxFlex="100" mat-dialog-title>{{ 'DRIVER.BLOCK_DETAILS' | translate }}</h1>
 
     <!-- <mat-dialog-content fxFlex="100"> -->
-      <form name="manualBlockForm" [formGroup]="manualBlockForm" fxFlex="100" fxLayout="row wrap"
-        fxLayoutAlign="center center">
+      <form *ngIf="mode == 'NEW'" name="manualBlockForm" [formGroup]="manualBlockForm" fxFlex="100" fxLayout="row wrap"
+        fxLayoutAlign="start center">
 
         <!-- BLOCK TYPE -->
         <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="pr-8 pl-8">
@@ -14,7 +15,7 @@
             </mat-option>
           </mat-select>
           <mat-error *ngIf="manualBlockForm.hasError('blockExist', ['block'])">
-              {{'DRIVER.DETAILS.BLOCK_EXIST' | translate}}
+              {{'DRIVER.DETAILS.BLOCK_EXIST' | translate }}
             </mat-error>
         </mat-form-field>
         <!-- BLOCK TYPE -->
@@ -44,9 +45,46 @@
 
       </form>
     <!-- </mat-dialog-content> -->
+    <div *ngIf="mode == 'VIEW' && block" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+    
+      <!-- BLOCK TYPE -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+        <input fxHide fxShow.gt-sm matInput readonly placeholder="{{'DRIVER.BLOCK_TYPE' | translate}}"
+          value="{{ 'DRIVER.DETAILS.BLOCK_TYPES.' + block.key | translate }}">
+        <textarea  fxShow fxHide.gt-sm readonly matInput placeholder="{{'DRIVER.BLOCK_TYPE' | translate}}"
+          [value]="'DRIVER.DETAILS.BLOCK_TYPES.' + block.key | translate">
+        </textarea>
+      </mat-form-field>
+      <!-- BLOCK TYPE -->
+
+      <!-- RESPONSIBLE USER -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+        <input matInput readonly placeholder="{{'DRIVER.BLOCK_RESPONSIBLE_USER' | translate}}" value="{{ block.user }}">
+      </mat-form-field>
+      <!-- RESPONSIBLE USER -->
+    
+      <!-- START TIME -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+        <input matInput readonly placeholder="{{'DRIVER.BLOCK_START_TIME' | translate}}" value="{{ block.startTime | date: 'dd/MM/y HH:mm:ss' }}">
+      </mat-form-field>
+      <!-- START TIME -->
+
+      <!-- END TIME -->
+      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+          <input *ngIf="block.endTime" matInput readonly placeholder="{{'DRIVER.BLOCK_END_TIME' | translate}}" value="{{ block.endTime | date: 'dd/MM/y HH:mm:ss' }}">
+          <input *ngIf="!block.endTime" matInput readonly placeholder="{{'DRIVER.BLOCK_END_TIME' | translate}}" value="{{ 'undefined' | translate }}">
+      </mat-form-field>
+      <!-- END TIME -->
+
+      <!-- BLOCK COMMENTS -->
+      <mat-form-field fxFlex.gt-xs="100" fxFlex="100" class="p-8">
+        <textarea rows="5" readonly matInput placeholder="{{'DRIVER.BLOCK_COMMENTS' | translate}}" [value]="block.notes" ></textarea>
+      </mat-form-field>
+      <!-- BLOCK COMMENTS -->    
+    </div>
 
     <mat-dialog-actions fxFlex="100">
-      <button mat-raised-button [disabled]="!manualBlockForm.valid" (click)="pushButton(true)">Ok</button>
+      <button *ngIf="mode == 'NEW'" mat-raised-button [disabled]="!manualBlockForm.valid" (click)="pushButton(true)">Ok</button>
       <button mat-raised-button mat-dialog-close color="warn" (click)="pushButton(false)">{{'DRIVER.CANCEL' | translate}}</button>
     </mat-dialog-actions>
 
