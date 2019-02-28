@@ -237,8 +237,11 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
       .pipe(
         filter(response => response),
         mergeMap(() => this.DriverDetailservice.removeDriverBlock$(this.driver._id, block.key)),
-        tap(() => {
-          this.dataSource.data = this.dataSource.data.filter((e: any) => e.key !== block.key);
+        mergeMap(res => this.graphQlAlarmsErrorHandler$(res)),
+        tap(response => {
+          if (!response.errors) {
+            this.dataSource.data = this.dataSource.data.filter((e: any) => e.key !== block.key);
+          }
         }),
         takeUntil(this.ngUnsubscribe)
       )
