@@ -19,10 +19,10 @@
 
       <!-- BLOCK KEY COLUMN -->
       <ng-container cdkColumnDef="key">
-          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{ "DRIVER.BLOCKS.KEY" | translate }}
+          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="start center">{{ "DRIVER.BLOCKS.KEY" | translate }}
           </mat-header-cell>
-          <mat-cell *cdkCellDef="let block" fxLayoutAlign="center center">
-              <p fxFlex="100" > {{ 'DRIVER.DETAILS.BLOCK_TYPES.' + block.key | translate }}</p>
+          <mat-cell *cdkCellDef="let block">
+              <p> {{ 'DRIVER.DETAILS.BLOCK_TYPES.' + block.key | translate }}</p>
           </mat-cell>
       </ng-container>
 
@@ -37,38 +37,38 @@
 
       <!-- START_TIME BLOCK COLUMN -->
       <ng-container cdkColumnDef="startTime">
-          <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs fxLayoutAlign="center center">{{ "DRIVER.BLOCKS.START_TIME" | translate }}
+          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="start center" fxHide fxShow.gt-xs>{{ "DRIVER.BLOCKS.START_TIME" | translate }}
           </mat-header-cell>
-          <mat-cell *cdkCellDef="let block" fxHide fxShow.gt-xs fxLayoutAlign="center center">
-              <p fxFlex="100"> {{ block.startTime | date: "dd/MM/y HH:mm:ss"  }} </p>
+          <mat-cell *cdkCellDef="let block" fxHide fxShow.gt-xs>
+              <p > {{ block.startTime | date: "dd/MM/y HH:mm:ss"  }} </p>
           </mat-cell>
       </ng-container>
 
       <!-- END_TIME BLOCK COLUMN -->
       <ng-container cdkColumnDef="endTime">
-          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center">{{ "DRIVER.BLOCKS.END_TIME" | translate }}
+          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="start center">{{ "DRIVER.BLOCKS.END_TIME" | translate }}
           </mat-header-cell>
-          <mat-cell *cdkCellDef="let block" fxLayoutAlign="center center">
-              <p  *ngIf="block.endTime" class="pl-8" fxFlex="100" > {{ block.endTime | date: "dd/MM/y HH:mm:ss" }} </p>
-              <p  *ngIf="!block.endTime" class="pl-8" fxFlex="100"> {{ 'undefined' | translate }} </p>
+          <mat-cell *cdkCellDef="let block">
+              <p  *ngIf="block.endTime" class="pl-8"  > {{ block.endTime | date: "dd/MM/y HH:mm:ss" }} </p>
+              <p  *ngIf="!block.endTime" class="pl-8" > {{ 'undefined' | translate }} </p>
           </mat-cell>
       </ng-container>
 
       <!-- RESPONSIBLE USER COLUMN -->
       <ng-container cdkColumnDef="user">
-          <mat-header-cell *cdkHeaderCellDef fxLayoutAlign="center center" fxHide fxShow.gt-sm>
+          <mat-header-cell *cdkHeaderCellDef fxHide fxLayoutAlign="start center" fxShow.gt-sm>
             {{ "DRIVER.BLOCKS.USER" | translate }}
           </mat-header-cell>
-          <mat-cell *cdkCellDef="let block" fxLayoutAlign="center center" fxHide fxShow.gt-sm>
-              <p style="text-align: center" fxFlex="100">{{ block.user }}</p>
+          <mat-cell *cdkCellDef="let block" fxHide fxShow.gt-sm>
+              <p>{{ block.user }}</p>
           </mat-cell>
       </ng-container>
 
        <!-- REMOVE BLOCK COLUMN -->
        <ng-container cdkColumnDef="actions">
-            <mat-header-cell *cdkHeaderCellDef fxFlex="20"  fxLayoutAlign="center center">{{ "DRIVER.BLOCKS.ACTIONS" | translate }}
+            <mat-header-cell *cdkHeaderCellDef fxFlex="23" fxFlex.gt-xs="15" fxLayoutAlign="center center" >{{ "DRIVER.BLOCKS.ACTIONS" | translate }}
             </mat-header-cell>
-            <mat-cell *cdkCellDef="let block" (click)="$event.stopPropagation()" fxLayoutAlign="center center" fxFlex="20">
+            <mat-cell *cdkCellDef="let block" fxLayoutAlign="center center" (click)="$event.stopPropagation()" fxFlex="23" fxFlex.gt-xs="15">
               <button mat-icon-button (click)="removeBlock(block)">
                 <mat-icon>delete</mat-icon>
               </button>
@@ -80,6 +80,6 @@
       <mat-row *cdkRowDef="let row; columns: displayedColumns" (click)="showBlockInfo(row)" class="item" matRipple>
       </mat-row>
   </mat-table>
-  <mat-paginator *ngIf="dataSource.data && dataSource.data.length > 0" fxFlex="100" #paginator [length]="tableSize" [pageIndex]="tablePage" [pageSize]="tableCount" [pageSizeOptions]="[5, 10, 25, 100]">
-  </mat-paginator>
+  <!-- <mat-paginator *ngIf="dataSource.data && dataSource.data.length > 0" fxFlex="100" #paginator [length]="tableSize" [pageIndex]="tablePage" [pageSize]="tableCount" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator> -->
 </div>
