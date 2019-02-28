@@ -301,6 +301,7 @@ module.exports = {
 
     },
 
+
     //// SUBSCRIPTIONS ///////
     Subscription: {
         DriverDriverUpdatedSubscription: {
