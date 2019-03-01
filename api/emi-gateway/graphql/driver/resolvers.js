@@ -325,7 +325,6 @@ module.exports = {
           )
       }
     }   
-
 };
 
 //// SUBSCRIPTIONS SOURCES ////
