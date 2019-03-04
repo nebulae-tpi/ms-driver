@@ -29,7 +29,7 @@
 
         <!-- BLOCK COMMENTS -->
         <mat-form-field fxFlex="100" class="p-8">
-          <textarea maxlength="500" minlength="10" rows="5" name="comment" formControlName="comment" matInput
+          <textarea [required]="true" maxlength="500" minlength="10" rows="5" name="comment" formControlName="comment" matInput
             placeholder="{{'DRIVER.BLOCK_COMMENTS' | translate}}"></textarea>
           <mat-error *ngIf="manualBlockForm.hasError('required', ['comment'])">
             {{'DRIVER.DETAILS.BLOCK_COMMENT_REQUIRED' | translate}}

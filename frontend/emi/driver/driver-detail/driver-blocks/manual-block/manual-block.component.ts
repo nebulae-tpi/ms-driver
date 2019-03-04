@@ -46,7 +46,7 @@ export class ManualBlockDialogComponent implements OnInit {
     this.manualBlockForm = new FormGroup({
       block: new FormControl(null, [Validators.required, this.validateBlock.bind(this) ]),
       duration: new FormControl(0),
-      comment: new FormControl('', [Validators.required]),
+      comment: new FormControl(''),
     });
   }
 
