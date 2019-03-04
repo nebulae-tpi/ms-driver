@@ -24,7 +24,8 @@ export class ManualBlockDialogComponent implements OnInit {
   blockTypes = [
     { key: 'BREACH_SERVICE', duration: 18000000 }, // FIVE HOURS
     { key: 'BREACH_AGREEMENT', duration: undefined },
-    { key: 'DOORMAN_COMPLAINT', duration: 7200000 }
+    { key: 'DOORMAN_COMPLAINT', duration: 7200000 },
+    { key: 'OTHER', duration: undefined }
     // { key: 'NON_PAYMENT', duration: undefined },
   ];
   forbidddenBlockKeys = [];

@@ -3,25 +3,20 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ViewChild,
-  ElementRef
+  ViewChild
 } from '@angular/core';
 
 import {
   FormBuilder,
-  FormGroup,
-  FormControl,
-  Validators
+  FormGroup
 } from '@angular/forms';
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 ////////// RXJS ///////////
 import {
   map,
   mergeMap,
-  switchMap,
-  toArray,
   filter,
   tap,
   takeUntil,
@@ -31,7 +26,7 @@ import {
   take
 } from 'rxjs/operators';
 
-import { Subject, fromEvent, of, forkJoin, Observable, concat, combineLatest } from 'rxjs';
+import { Subject, of, forkJoin, combineLatest } from 'rxjs';
 
 ////////// ANGULAR MATERIAL //////////
 import {
@@ -44,11 +39,7 @@ import {
 import { fuseAnimations } from '../../../../core/animations';
 
 //////////// i18n ////////////
-import {
-  TranslateService,
-  LangChangeEvent,
-  TranslationChangeEvent
-} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { locale as english } from '../i18n/en';
 import { locale as spanish } from '../i18n/es';
 import { FuseTranslationLoaderService } from '../../../../core/services/translation-loader.service';
@@ -65,10 +56,8 @@ import {
 import * as moment from 'moment';
 
 //////////// Other Services ////////////
-import { KeycloakService } from 'keycloak-angular';
 import { DriverListService } from './driver-list.service';
 import { ToolbarService } from '../../../toolbar/toolbar.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -127,12 +116,9 @@ export class DriverListComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private activatedRouter: ActivatedRoute,
-    private keycloakService: KeycloakService,
     private adapter: DateAdapter<any>,
     private DriverListservice: DriverListService,
     private toolbarService: ToolbarService,
-    private dialog: MatDialog
   ) {
       this.translationLoader.loadTranslations(english, spanish);
   }
@@ -324,7 +310,7 @@ export class DriverListComponent implements OnInit, OnDestroy {
     return this.DriverListservice.getdriverSize$(filterInput)
     .pipe(
       mergeMap(resp => this.graphQlAlarmsErrorHandler$(resp)),
-      map(resp => (resp.data && resp.data.DriverDriversSize) ? resp.data.DriverDriversSize: 0)
+      map(resp => (resp.data && resp.data.DriverDriversSize) ? resp.data.DriverDriversSize : 0)
     );
   }
 

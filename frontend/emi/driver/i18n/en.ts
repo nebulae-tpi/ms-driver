@@ -64,10 +64,11 @@ export const locale = {
         BLOCK_TYPES: {
           BREACH_SERVICE: 'Breach of service',
           BREACH_AGREEMENT: 'Breach of agreement',
-          DOORMAN_COMPLAINT: 'Doorman complaint'
+          DOORMAN_COMPLAINT: 'Doorman complaint',
+          OTHER: 'Other'
         },
         BLOCK_COMMENT_REQUIRED: 'Comments field required',
-        BLOCK_COMMENT_MIN_LENGTH_ERROR: 'Comments require at least 50 caracters',
+        BLOCK_COMMENT_MIN_LENGTH_ERROR: 'Comments require at least 10 caracters',
         BLOCK_COMMENT_MAX_LENGTH_ERROR: 'Very long comment',
         BLOCK_EXIST: 'Driver already have this block type',
         DOCUMENT: 'Document',

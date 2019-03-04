@@ -200,8 +200,9 @@ class DriverValidatorHelper {
     }
     return DriverDA.findByDocumentId$(driver.generalInfo.documentType, driver.generalInfo.document, driver.businessId )
     .pipe(
-      tap(r => console.log("RESULTADO DE LA BUSQUEDA DEL USUARIO CON LA CEDULE POR BU ES ==> ", r)),
-      mergeMap(r => r ? this.throwCustomError$(USER_ALREADY_EXIST_IN_BU) : of(null) )
+      // tap(r => console.log("RESULTADO DE LA BUSQUEDA DEL USUARIO CON LA CEDULE POR BU ES ==> ", r)),
+      // tap(r => console.log("EL DRIVER DE LA QUERY ES ==> ", driver)),
+      mergeMap(r => ( r && r._id !== driver._id ) ? this.throwCustomError$(USER_ALREADY_EXIST_IN_BU) : of(null) )
     )    
   }
 
