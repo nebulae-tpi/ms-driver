@@ -40,7 +40,7 @@ export const locale = {
           MEMBERSHIP: 'Membership',
           CREDENTIALS: 'Credentials'
         },
-        NO_HAVE_BLOCKS: 'The driver haven\'t blocks',
+        NO_HAVE_BLOCKS: 'Driver without blocks',
         CREATED_BY: 'Created By',
         CREATED_IN: 'Created',
         EDITED_BY: 'Edited By',
