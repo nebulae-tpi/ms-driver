@@ -88,7 +88,7 @@ class DriverCQRS {
   }
 
   static log(msg) {
-    console.log(`${dateFormat(new Date(), "HH:MM:lll")}: ${msg}`);
+    console.log(`${dateFormat(new Date(), "HH:MM:ss:l")}: ${msg}`);
   }
 
   /**  

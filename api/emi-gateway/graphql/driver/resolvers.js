@@ -29,7 +29,7 @@ function getResponseFromBackEnd$(response) {
 }
 
 function log(msg) {
-  console.log(`${dateFormat(new Date(), "HH:MM:l")}: ${msg}`);
+  console.log(`${dateFormat(new Date(), "HH:MM:ss:l")}: ${msg}`);
 }
 
 
@@ -46,6 +46,10 @@ module.exports = {
         ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
       )
         .pipe(
+          tap(x => {
+            const mem = process.memoryUsage();
+            log(`MEM = rss=${mem.rss/1000000}, heapTotal=${mem.heapTotal/1000000}, heapUsed=${mem.heapUsed/1000000}, external=${mem.external/1000000}, `);
+          }),
           tap(x => log(`TIME_TRACKING.DriverDrivers: rqst`)),
           mergeMap(() =>
             broker.forwardAndGetReply$(
