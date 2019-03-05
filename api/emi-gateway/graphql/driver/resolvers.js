@@ -38,6 +38,7 @@ module.exports = {
   //// QUERY ///////
   Query: {
     DriverDrivers(root, args, context) {
+      const init = Date.now();
       return RoleValidator.checkPermissions$(
         context.authToken.realm_access.roles,
         'ms-driver', 'DriverDrivers', PERMISSION_DENIED_ERROR_CODE,
@@ -56,10 +57,11 @@ module.exports = {
           ),          
           catchError(err => handleError$(err, "driverDrivers")),
           mergeMap(response => getResponseFromBackEnd$(response)),
-          tap(x => log(`TIME_TRACKING.DriverDrivers: resp`)),
+          tap(x => log(`TIME_TRACKING.DriverDrivers: resp => ${Date.now() - init}`)),
         ).toPromise();
     },
     DriverDriversSize(root, args, context) {
+      const init = Date.now();
       return RoleValidator.checkPermissions$(
         context.authToken.realm_access.roles,
         'ms-driver', 'DriverDriversSize', PERMISSION_DENIED_ERROR_CODE,
@@ -67,6 +69,7 @@ module.exports = {
         ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
       )
         .pipe(
+          tap(x => log(`TIME_TRACKING.DriverDriversSize: rqst`)),
           mergeMap(() =>
             broker.forwardAndGetReply$(
               "Driver",
@@ -76,10 +79,12 @@ module.exports = {
             )
           ),
           catchError(err => handleError$(err, "driverDriversSize")),
-          mergeMap(response => getResponseFromBackEnd$(response))
+          mergeMap(response => getResponseFromBackEnd$(response)),
+          tap(x => log(`TIME_TRACKING.DriverDriversSize: resp => ${Date.now() - init}`)),
         ).toPromise();
     },
     DriverDriver(root, args, context) {
+      const init = Date.now();
       return RoleValidator.checkPermissions$(
         context.authToken.realm_access.roles,
         'ms-driver', 'DriverDriver', PERMISSION_DENIED_ERROR_CODE,
@@ -87,6 +92,7 @@ module.exports = {
         ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
       )
         .pipe(
+          tap(x => log(`TIME_TRACKING.DriverDriver: rqst`)),
           mergeMap(() =>
             broker.forwardAndGetReply$(
               "Driver",
@@ -96,7 +102,8 @@ module.exports = {
             )
           ),
           catchError(err => handleError$(err, "driverDriver")),
-          mergeMap(response => getResponseFromBackEnd$(response))
+          mergeMap(response => getResponseFromBackEnd$(response)),
+          tap(x => log(`TIME_TRACKING.DriverDriver: resp => ${Date.now() - init}`)),
         ).toPromise();
     },
     DriverDriverBlocks(root, args, context) {
