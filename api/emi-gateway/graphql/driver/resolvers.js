@@ -2,7 +2,7 @@ const withFilter = require("graphql-subscriptions").withFilter;
 const PubSub = require("graphql-subscriptions").PubSub;
 const pubsub = new PubSub();
 const { of } = require("rxjs");
-const { map, mergeMap, catchError } = require('rxjs/operators');
+const { map, mergeMap, catchError, tap } = require('rxjs/operators');
 const broker = require("../../broker/BrokerFactory")();
 const RoleValidator = require('../../tools/RoleValidator');
 const {handleError$} = require('../../tools/GraphqlResponseTools');
@@ -27,6 +27,10 @@ function getResponseFromBackEnd$(response) {
     );
 }
 
+function log(msg) {
+  console.log(`${dateFormat(new Date(), "isoDateTime")}: ${msg}`);
+}
+
 
 module.exports = {
 
@@ -40,6 +44,7 @@ module.exports = {
                 ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
             )
                 .pipe(
+                    tap( x => log(`TIME_TRACKING.DriverDrivers: rqst`)),
                     mergeMap(() =>
                         broker.forwardAndGetReply$(
                             "Driver",
@@ -48,6 +53,7 @@ module.exports = {
                             2000
                         )
                     ),
+                    tap( x => log(`TIME_TRACKING.DriverDrivers: resp`)),
                     catchError(err => handleError$(err, "driverDrivers")),
                     mergeMap(response => getResponseFromBackEnd$(response))
                 ).toPromise();

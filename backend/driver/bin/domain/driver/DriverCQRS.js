@@ -18,7 +18,7 @@ const {
   INTERNAL_SERVER_ERROR_CODE,
   PERMISSION_DENIED_ERROR_CODE
 } = require("../../tools/customError");
-const DriverBlocksDA =  require('../../data/DriverBlocksDA');
+const DriverBlocksDA = require('../../data/DriverBlocksDA');
 
 
 
@@ -47,7 +47,7 @@ class DriverCQRS {
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
         //If an user does not have the role to get the Driver from other business, the query must be filtered with the businessId of the user
-        const businessId = !isPlatformAdmin? (authToken.businessId || ''): null;
+        const businessId = !isPlatformAdmin ? (authToken.businessId || '') : null;
         return DriverDA.getDriver$(args.id, businessId)
       }),
       mergeMap(rawResponse => GraphqlResponseTools.buildSuccessResponse$(rawResponse)),
@@ -68,26 +68,32 @@ class DriverCQRS {
       PERMISSION_DENIED_ERROR_CODE,
       ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
+      tap(x => DriverCQRS.log(`TIME_TRACKING.DriverDrivers: rqst`)),
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
         //If an user does not have the role to get the Driver from other business, the query must be filtered with the businessId of the user
-        const businessId = !isPlatformAdmin? (authToken.businessId || ''): args.filterInput.businessId;
+        const businessId = !isPlatformAdmin ? (authToken.businessId || '') : args.filterInput.businessId;
         const filterInput = args.filterInput;
         filterInput.businessId = businessId;
 
         return DriverDA.getDriverList$(filterInput, args.paginationInput);
       }),
       toArray(),
+      tap(x => DriverCQRS.log(`TIME_TRACKING.DriverDrivers: resp`)),
       mergeMap(rawResponse => GraphqlResponseTools.buildSuccessResponse$(rawResponse)),
       catchError(err => GraphqlResponseTools.handleError$(err))
     );
   }
 
-    /**  
-   * Gets the amount of the Driver according to the filter
-   *
-   * @param {*} args args
-   */
+  static log(msg) {
+    console.log(`${dateFormat(new Date(), "isoDateTime")}: ${msg}`);
+  }
+
+  /**  
+ * Gets the amount of the Driver according to the filter
+ *
+ * @param {*} args args
+ */
   getDriverListSize$({ args }, authToken) {
     return RoleValidator.checkPermissions$(
       authToken.realm_access.roles,
@@ -99,7 +105,7 @@ class DriverCQRS {
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
         //If an user does not have the role to get the Driver from other business, the query must be filtered with the businessId of the user
-        const businessId = !isPlatformAdmin? (authToken.businessId || ''): args.filterInput.businessId;
+        const businessId = !isPlatformAdmin ? (authToken.businessId || '') : args.filterInput.businessId;
         const filterInput = args.filterInput;
         filterInput.businessId = businessId;
 
@@ -110,12 +116,12 @@ class DriverCQRS {
     );
   }
 
-    /**
-  * Create a driver
-  */
- createDriver$({ root, args, jwt }, authToken) {
-    const driver = args ? args.input: undefined;
-    if(driver){
+  /**
+* Create a driver
+*/
+  createDriver$({ root, args, jwt }, authToken) {
+    const driver = args ? args.input : undefined;
+    if (driver) {
       driver._id = uuidv4();
       driver.creatorUser = authToken.preferred_username;
       driver.creationTimestamp = new Date().getTime();
@@ -165,17 +171,17 @@ class DriverCQRS {
       PERMISSION_DENIED_ERROR_CODE,
       ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
-      mergeMap(roles => 
+      mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
-        .pipe(
-          mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverValidator$(driver, authToken, roles, userMongo)),
-          mergeMap(data => {
-            if(data.userMongo && data.userMongo.auth && data.userMongo.auth.userKeycloakId){
-              return DriverKeycloakDA.updateUserGeneralInfo$(data.userMongo.auth.userKeycloakId, data.driver.generalInfo).pipe(mapTo(data));
-            }
-            return of(data)
-          })
-        )              
+          .pipe(
+            mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverValidator$(driver, authToken, roles, userMongo)),
+            mergeMap(data => {
+              if (data.userMongo && data.userMongo.auth && data.userMongo.auth.userKeycloakId) {
+                return DriverKeycloakDA.updateUserGeneralInfo$(data.userMongo.auth.userKeycloakId, data.driver.generalInfo).pipe(mapTo(data));
+              }
+              return of(data)
+            })
+          )
       ),
       mergeMap(data => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -212,18 +218,18 @@ class DriverCQRS {
       PERMISSION_DENIED_ERROR_CODE,
       ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
-      mergeMap(roles => 
+      mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
-        .pipe(
-          mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverStateValidator$(driver, authToken, roles, userMongo)),
-          // Update the state of the user on Keycloak
-          mergeMap(data => {
-            if(data.userMongo && data.userMongo.auth && data.userMongo.auth.userKeycloakId){
-              return DriverKeycloakDA.updateUserState$(data.userMongo.auth.userKeycloakId, data.driver.state).pipe(mapTo(data));
-            }
-            return of(data)
-          })
-        )
+          .pipe(
+            mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverStateValidator$(driver, authToken, roles, userMongo)),
+            // Update the state of the user on Keycloak
+            mergeMap(data => {
+              if (data.userMongo && data.userMongo.auth && data.userMongo.auth.userKeycloakId) {
+                return DriverKeycloakDA.updateUserState$(data.userMongo.auth.userKeycloakId, data.driver.state).pipe(mapTo(data));
+              }
+              return of(data)
+            })
+          )
       ),
       mergeMap(data => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -259,29 +265,29 @@ class DriverCQRS {
       PERMISSION_DENIED_ERROR_CODE,
       ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
-      mergeMap(roles => 
+      mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
-        .pipe( 
-          //Validate the data
-          mergeMap(userMongo => DriverValidatorHelper.checkDriverCreateDriverAuthValidator$(driver, authToken, roles, userMongo)),
-          // Creates the user on Keycloak
-          mergeMap(data => DriverKeycloakDA.createUser$(data.userMongo, data.driver.authInput)
           .pipe(
-            //Assignes a password to the user
-            mergeMap(userKeycloak => {
-              const password = {
-                temporary: data.driver.authInput.temporary || false,
-                value: data.driver.authInput.password
-              }
-              return DriverKeycloakDA.resetUserPassword$(userKeycloak.id, password)
+            //Validate the data
+            mergeMap(userMongo => DriverValidatorHelper.checkDriverCreateDriverAuthValidator$(driver, authToken, roles, userMongo)),
+            // Creates the user on Keycloak
+            mergeMap(data => DriverKeycloakDA.createUser$(data.userMongo, data.driver.authInput)
               .pipe(
-                //Adds DRIVER role
-                mergeMap(reset => DriverKeycloakDA.addRolesToTheUser$(userKeycloak.id, ['DRIVER'])),
-                mapTo(userKeycloak)
-              )
-            })
-          ))          
-        )
+                //Assignes a password to the user
+                mergeMap(userKeycloak => {
+                  const password = {
+                    temporary: data.driver.authInput.temporary || false,
+                    value: data.driver.authInput.password
+                  }
+                  return DriverKeycloakDA.resetUserPassword$(userKeycloak.id, password)
+                    .pipe(
+                      //Adds DRIVER role
+                      mergeMap(reset => DriverKeycloakDA.addRolesToTheUser$(userKeycloak.id, ['DRIVER'])),
+                      mapTo(userKeycloak)
+                    )
+                })
+              ))
+          )
       ),
       mergeMap(userKeycloak => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -321,19 +327,19 @@ class DriverCQRS {
       PERMISSION_DENIED_ERROR_CODE,
       ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
-      mergeMap(roles => 
+      mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
-        .pipe( 
-          mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverAuthValidator$(driver, authToken, roles, userMongo)),
-          //Reset user password on Keycloak
-          mergeMap(data => {
-            const password = {
-              temporary: data.driver.passwordInput.temporary || false,
-              value: data.driver.passwordInput.password
-            }
-            return DriverKeycloakDA.resetUserPassword$(data.userMongo.auth.userKeycloakId, password);
-          })
-        )
+          .pipe(
+            mergeMap(userMongo => DriverValidatorHelper.checkDriverUpdateDriverAuthValidator$(driver, authToken, roles, userMongo)),
+            //Reset user password on Keycloak
+            mergeMap(data => {
+              const password = {
+                temporary: data.driver.passwordInput.temporary || false,
+                value: data.driver.passwordInput.password
+              }
+              return DriverKeycloakDA.resetUserPassword$(data.userMongo.auth.userKeycloakId, password);
+            })
+          )
       ),
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -368,20 +374,20 @@ class DriverCQRS {
       PERMISSION_DENIED_ERROR_CODE,
       ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
     ).pipe(
-      mergeMap(roles => 
+      mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
-        .pipe( 
-          mergeMap(userMongo => DriverValidatorHelper.checkDriverRemoveDriverAuthValidator$(driver, authToken, roles, userMongo)),
-          mergeMap(data => DriverKeycloakDA.removeUser$(data.userMongo.auth.userKeycloakId)
-            .pipe(
-              mapTo(data),
-              // If there was an error, check if the user does not exist
-              catchError(error => {
-                return DriverValidatorHelper.checkIfUserWasDeletedOnKeycloak$(userMongo.auth.userKeycloakId);
-              })
-            )
-          ),
-        )
+          .pipe(
+            mergeMap(userMongo => DriverValidatorHelper.checkDriverRemoveDriverAuthValidator$(driver, authToken, roles, userMongo)),
+            mergeMap(data => DriverKeycloakDA.removeUser$(data.userMongo.auth.userKeycloakId)
+              .pipe(
+                mapTo(data),
+                // If there was an error, check if the user does not exist
+                catchError(error => {
+                  return DriverValidatorHelper.checkIfUserWasDeletedOnKeycloak$(userMongo.auth.userKeycloakId);
+                })
+              )
+            ),
+          )
       ),
       mergeMap(data => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -405,9 +411,9 @@ class DriverCQRS {
 
 
 
-    /**
-   * Edit the driver membership state
-   */
+  /**
+ * Edit the driver membership state
+ */
   updateDriverMembershipState$({ root, args, jwt }, authToken) {
     const driver = {
       _id: args.id,
@@ -439,7 +445,7 @@ class DriverCQRS {
     );
   }
 
-  
+
   getDriverBlocks$({ root, args, jwt }, authToken) {
     return RoleValidator.checkPermissions$(
       authToken.realm_access.roles,
@@ -462,7 +468,7 @@ class DriverCQRS {
 
   }
 
-  removeDriverBlock$({ root, args, jwt }, authToken) { 
+  removeDriverBlock$({ root, args, jwt }, authToken) {
     return RoleValidator.checkPermissions$(
       authToken.realm_access.roles,
       "driverBlock",
@@ -476,7 +482,7 @@ class DriverCQRS {
           eventTypeVersion: 1,
           aggregateType: "Driver",
           aggregateId: args.id,
-          data: { blockKey: args.blockKey},
+          data: { blockKey: args.blockKey },
           user: authToken.preferred_username
         })
       )),
