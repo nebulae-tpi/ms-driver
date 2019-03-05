@@ -87,7 +87,7 @@ class DriverCQRS {
   }
 
   static log(msg) {
-    console.log(`${dateFormat(new Date(), "isoDateTime")}: ${msg}`);
+    console.log(`${dateFormat(new Date(), "HH:MM:lll")}: ${msg}`);
   }
 
   /**  
