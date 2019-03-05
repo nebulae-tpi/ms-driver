@@ -62,6 +62,7 @@ class DriverCQRS {
    * @param {*} args args
    */
   getDriverList$({ args }, authToken) {
+    const init = Date.now();
     return RoleValidator.checkPermissions$(
       authToken.realm_access.roles,
       "Driver",
@@ -87,7 +88,7 @@ class DriverCQRS {
   }
 
   static log(msg) {
-    console.log(`${dateFormat(new Date(), "HH:MM:lll")}: ${msg}`);
+    console.log(`${dateFormat(new Date(), "HH:MM:l")}: ${msg} => ${Date.now() - init}`);
   }
 
   /**  

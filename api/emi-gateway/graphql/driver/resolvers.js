@@ -29,7 +29,7 @@ function getResponseFromBackEnd$(response) {
 }
 
 function log(msg) {
-  console.log(`${dateFormat(new Date(), "HH:MM:lll")}: ${msg}`);
+  console.log(`${dateFormat(new Date(), "HH:MM:l")}: ${msg}`);
 }
 
 
@@ -53,10 +53,10 @@ module.exports = {
               { root, args, jwt: context.encodedToken },
               2000
             )
-          ),
-          tap(x => log(`TIME_TRACKING.DriverDrivers: resp`)),
+          ),          
           catchError(err => handleError$(err, "driverDrivers")),
-          mergeMap(response => getResponseFromBackEnd$(response))
+          mergeMap(response => getResponseFromBackEnd$(response)),
+          tap(x => log(`TIME_TRACKING.DriverDrivers: resp`)),
         ).toPromise();
     },
     DriverDriversSize(root, args, context) {
