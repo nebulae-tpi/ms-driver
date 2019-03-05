@@ -56,7 +56,7 @@ module.exports = {
               "Driver",
               "emigateway.graphql.query.driverDrivers",
               { root, args, jwt: context.encodedToken },
-              2000
+              10000
             )
           ),          
           catchError(err => handleError$(err, "driverDrivers")),
