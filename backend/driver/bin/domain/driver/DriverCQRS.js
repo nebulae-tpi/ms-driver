@@ -81,14 +81,14 @@ class DriverCQRS {
         return DriverDA.getDriverList$(filterInput, args.paginationInput);
       }),
       toArray(),
-      tap(x => DriverCQRS.log(`TIME_TRACKING.DriverDrivers: resp`)),
+      tap(x => DriverCQRS.log(`TIME_TRACKING.DriverDrivers: resp => ${Date.now() - init}`)),
       mergeMap(rawResponse => GraphqlResponseTools.buildSuccessResponse$(rawResponse)),
       catchError(err => GraphqlResponseTools.handleError$(err))
     );
   }
 
   static log(msg) {
-    console.log(`${dateFormat(new Date(), "HH:MM:l")}: ${msg} => ${Date.now() - init}`);
+    console.log(`${dateFormat(new Date(), "HH:MM:lll")}: ${msg}`);
   }
 
   /**  
