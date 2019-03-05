@@ -1,6 +1,7 @@
 "use strict";
 
 const uuidv4 = require("uuid/v4");
+var dateFormat = require('dateformat');
 const Event = require("@nebulae/event-store").Event;
 const eventSourcing = require("../../tools/EventSourcing")();
 const DriverDA = require("../../data/DriverDA");
