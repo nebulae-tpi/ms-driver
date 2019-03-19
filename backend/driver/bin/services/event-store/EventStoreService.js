@@ -2,6 +2,7 @@
 const { of, from, concat } = require("rxjs");
 const eventSourcing = require("../../tools/EventSourcing")();
 const { DriverES } = require("../../domain/driver");
+const { CronJobES } = require("../../domain/cronjob");
 const { map, switchMap, filter, mergeMap, concatMap } = require('rxjs/operators');
 /**
  * Singleton instance
@@ -153,10 +154,11 @@ class EventStoreService {
         fn: DriverES.handleDriverBlockAdded$,
         obj: DriverES
       },
-      DriverCleanExpiredBlocks: {
-        fn: DriverES.handleCleanExpiredDriverBlocks$,
-        obj: DriverES
-      }
+      // cronjob
+      PeriodicFiveMinutes: {
+        fn: CronJobES.handlePeriodicFiveMinutes$,
+        obj: CronJobES
+      },
 
     };
   }
@@ -198,10 +200,8 @@ class EventStoreService {
         aggregateType: "Driver",
         eventType: "DriverBlockAdded"
       },
-      {
-        aggregateType: "Driver",
-        eventType: "DriverCleanExpiredBlocks"
-      }
+      // cronjob
+      { aggregateType: "Cronjob", eventType: "PeriodicFiveMinutes" },
     ]
   }
 }
