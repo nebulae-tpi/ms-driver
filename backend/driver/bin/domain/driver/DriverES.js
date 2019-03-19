@@ -141,9 +141,7 @@ class DriverES {
 
     }
 
-    handleCleanExpiredDriverBlocks$(DriverBlockRemovedEvt){
-        return DriverBlocksDA.removeExpiredBlocks$(DriverBlockRemovedEvt.timestamp);
-    }
+
 
 }
 

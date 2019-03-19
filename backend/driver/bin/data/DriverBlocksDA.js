@@ -51,10 +51,10 @@ class DriverBlocksDA {
     )
   }
 
-
-  static removeExpiredBlocks$(timestamp){
+  static findAllExpiredBlocks$(timestamp){
     const collection = mongoDB.db.collection(COLLECTION_NAME);
-    return defer(() => collection.deleteMany( { endTime: { $$lte: timestamp } }))
+    const query = { endTime: { $lte: timestamp } };
+    return mongoDB.extractAllFromMongoCursor$(collection.find(query));
   }
 
 }
