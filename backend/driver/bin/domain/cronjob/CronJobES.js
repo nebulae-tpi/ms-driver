@@ -27,7 +27,6 @@ class CronJobES {
   }
 
     handlePeriodicFiveMinutes$() {
-    console.log("------- handlePeriodicFiveMinutes$ ----------");
     return forkJoin(
       this.searchExpiredBlocksToRemove$()
     )
@@ -36,7 +35,7 @@ class CronJobES {
   searchExpiredBlocksToRemove$(){
     return DriverBlocksDA.findAllExpiredBlocks$(Date.now())
     .pipe(
-      tap(block => console.log('BLOCK TO REMOVE ==>', JSON.stringify(block), '\n')),
+      // tap(block => console.log('BLOCK TO REMOVE ==>', JSON.stringify(block), '\n')),
       mergeMap(block => this.generateEventStoreEvent$('DriverBlockRemoved', 1, 'Driver', block.driverId, {
         blockKey: block.key
       }, 'SYSTEM')),
