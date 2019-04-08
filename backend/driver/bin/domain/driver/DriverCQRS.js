@@ -43,7 +43,7 @@ class DriverCQRS {
       "Driver",
       "getDriver",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
@@ -68,7 +68,7 @@ class DriverCQRS {
       "Driver",
       "getDriverList",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
       tap(x => DriverCQRS.log(`TIME_TRACKING.DriverDrivers: rqst`)),
       mergeMap(roles => {
@@ -102,7 +102,7 @@ class DriverCQRS {
       "Driver",
       "getDriverListSize",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
       mergeMap(roles => {
         const isPlatformAdmin = roles["PLATFORM-ADMIN"];
@@ -136,7 +136,7 @@ class DriverCQRS {
       "Driver",
       "createDriver$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
     ).pipe(
       mergeMap(roles => DriverValidatorHelper.checkDriverCreationDriverValidator$(driver, authToken, roles)),
       mergeMap(data => eventSourcing.eventStore.emitEvent$(
@@ -171,7 +171,7 @@ class DriverCQRS {
       "Driver",
       "updateDriverGeneralInfo$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
     ).pipe(
       mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
@@ -218,7 +218,7 @@ class DriverCQRS {
       "Driver",
       "updateDriverState$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
     ).pipe(
       mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
@@ -265,7 +265,7 @@ class DriverCQRS {
       "Driver",
       "createDriverAuth$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
     ).pipe(
       mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
@@ -327,7 +327,7 @@ class DriverCQRS {
       "Driver",
       "resetDriverPassword$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
     ).pipe(
       mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
@@ -374,7 +374,7 @@ class DriverCQRS {
       "Driver",
       "removeUserAuth$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
     ).pipe(
       mergeMap(roles =>
         DriverDA.getDriver$(driver._id)
@@ -428,7 +428,7 @@ class DriverCQRS {
       "Driver",
       "updateDriverMembershipState$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
     ).pipe(
       mergeMap(() => eventSourcing.eventStore.emitEvent$(
         new Event({
@@ -454,7 +454,7 @@ class DriverCQRS {
       "driverBlocks",
       "getDriverBlocks$",
       PERMISSION_DENIED_ERROR_CODE,
-      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
+      ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"]
     ).pipe(
       // map(() => [{
       //   key: 'PICO_Y_PLACA',

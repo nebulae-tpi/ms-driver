@@ -43,7 +43,7 @@ module.exports = {
         context.authToken.realm_access.roles,
         'ms-driver', 'DriverDrivers', PERMISSION_DENIED_ERROR_CODE,
         'Permission denied',
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"]
       )
         .pipe(
           tap(x => {
@@ -70,7 +70,7 @@ module.exports = {
         context.authToken.realm_access.roles,
         'ms-driver', 'DriverDriversSize', PERMISSION_DENIED_ERROR_CODE,
         'Permission denied',
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"]
       )
         .pipe(
           tap(x => log(`TIME_TRACKING.DriverDriversSize: rqst`)),
@@ -93,7 +93,7 @@ module.exports = {
         context.authToken.realm_access.roles,
         'ms-driver', 'DriverDriver', PERMISSION_DENIED_ERROR_CODE,
         'Permission denied',
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"]
       )
         .pipe(
           tap(x => log(`TIME_TRACKING.DriverDriver: rqst`)),
@@ -115,7 +115,7 @@ module.exports = {
         context.authToken.realm_access.roles,
         'ms-driver', 'DriverDriverBlocks',
         PERMISSION_DENIED_ERROR_CODE,
-        'Permission denied', ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"]
+        'Permission denied', ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"]
       )
         .pipe(
           mergeMap(() => broker
@@ -139,7 +139,7 @@ module.exports = {
         "Driver", "DriverCreateDriver",
         PERMISSION_DENIED_ERROR_CODE,
         "Permission denied",
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
       )
         .pipe(
           mergeMap(() =>
@@ -160,7 +160,7 @@ module.exports = {
         "Driver", "DriverUpdateDriverGeneralInfo",
         PERMISSION_DENIED_ERROR_CODE,
         "Permission denied",
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
       ).pipe(
         mergeMap(() =>
           context.broker.forwardAndGetReply$(
@@ -180,7 +180,7 @@ module.exports = {
         "Driver", "DriverUpdateDriverState",
         PERMISSION_DENIED_ERROR_CODE,
         "Permission denied",
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
       ).pipe(
         mergeMap(() =>
           context.broker.forwardAndGetReply$(
@@ -199,7 +199,7 @@ module.exports = {
         context.authToken.realm_access.roles,
         "Driver", "DriverUpdateDriverMembershipState",
         PERMISSION_DENIED_ERROR_CODE, "Permission denied",
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
       ).pipe(
         mergeMap(() =>
           context.broker.forwardAndGetReply$(
@@ -218,7 +218,7 @@ module.exports = {
         context.authToken.realm_access.roles,
         "Driver", "DriverCreateDriverAuth",
         PERMISSION_DENIED_ERROR_CODE, "Permission denied",
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
       )
         .pipe(
           mergeMap(() =>
@@ -240,7 +240,7 @@ module.exports = {
         "Driver", "DriverResetDriverPassword",
         PERMISSION_DENIED_ERROR_CODE,
         "Permission denied",
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
       )
         .pipe(
           mergeMap(() =>
@@ -261,7 +261,7 @@ module.exports = {
         context.authToken.realm_access.roles,
         "Driver", "DriverRemoveDriverAuth",
         PERMISSION_DENIED_ERROR_CODE, "Permission denied",
-        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR"]
+        ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR"]
       )
         .pipe(
           mergeMap(() =>

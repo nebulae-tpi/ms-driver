@@ -39,7 +39,7 @@
                 "path": "driver",
                 "loadChildren": "./main/content/driver/driver.module#DriverModule",
                 "priority": 1000,
-                "roles" : ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR", "DISCIPLINARY-COMMITTEE"],
+                "roles" : ["PLATFORM-ADMIN", "BUSINESS-OWNER", "COORDINATOR","OPERATION-SUPERVISOR", "DISCIPLINARY-COMMITTEE"],
                 "default" : false
             }            
         ],
