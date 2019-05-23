@@ -65,6 +65,8 @@ export const locale = {
           BREACH_SERVICE: 'Incumplimiento del servicio',
           BREACH_AGREEMENT: 'Incumplimiento de acuerdo empresarial',
           DOORMAN_COMPLAINT: 'Queja del portero',
+          BAD_DISCIPLINARY_BEHAVIOR_QR5: 'Mal Comportamiento (QR5)',
+          STOLEN_SERVICE: 'Robo de Servicio',
           OTHER: 'Otro'
         },
         BLOCK_COMMENT_REQUIRED: 'Comentario requerido',

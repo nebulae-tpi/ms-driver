@@ -8,7 +8,7 @@
         fxLayoutAlign="start center">
 
         <!-- BLOCK TYPE -->
-        <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="pr-8 pl-8">
+        <mat-form-field fxFlex="100" class="pr-8 pl-8">
           <mat-select name="block" formControlName="block" placeholder="{{'DRIVER.BLOCK_TYPE' | translate}}">
             <mat-option *ngFor="let block of blockTypes" [value]="block">
               {{ 'DRIVER.DETAILS.BLOCK_TYPES.'+ block.key | translate }}
@@ -21,7 +21,7 @@
         <!-- BLOCK TYPE -->
 
         <!-- BLOCK DURATION -->
-        <mat-form-field *ngIf="manualBlockForm.controls['block'].value" fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+        <mat-form-field *ngIf="manualBlockForm.controls['block'].value" fxFlex="100" class="p-8">
           <input matInput readonly placeholder="{{'DRIVER.BLOCK_DURATION' | translate}}"
             value="{{ manualBlockForm.controls['block'].value.duration ? (manualBlockForm.controls['block'].value.duration / 3600000 ) + ' H'  : 'undefined' | translate }}">
         </mat-form-field>
@@ -29,7 +29,7 @@
 
         <!-- BLOCK COMMENTS -->
         <mat-form-field fxFlex="100" class="p-8">
-          <textarea [required]="true" maxlength="500" minlength="10" rows="5" name="comment" formControlName="comment" matInput
+          <textarea [required]="true" maxlength="500" minlength="10" maxlength="300" rows="6" name="comment" formControlName="comment" matInput
             placeholder="{{'DRIVER.BLOCK_COMMENTS' | translate}}"></textarea>
           <mat-error *ngIf="manualBlockForm.hasError('required', ['comment'])">
             {{'DRIVER.DETAILS.BLOCK_COMMENT_REQUIRED' | translate}}
@@ -48,7 +48,7 @@
     <div *ngIf="mode == 'VIEW' && block" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
 
       <!-- BLOCK TYPE -->
-      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+      <mat-form-field fxFlex="100" class="p-8">
         <input fxHide fxShow.gt-sm matInput readonly placeholder="{{'DRIVER.BLOCK_TYPE' | translate}}"
           value="{{ 'DRIVER.DETAILS.BLOCK_TYPES.' + block.key | translate }}">
         <textarea  fxShow fxHide.gt-sm readonly matInput placeholder="{{'DRIVER.BLOCK_TYPE' | translate}}"
@@ -58,19 +58,19 @@
       <!-- BLOCK TYPE -->
 
       <!-- RESPONSIBLE USER -->
-      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+      <mat-form-field fxFlex="100" class="p-8">
         <input matInput readonly placeholder="{{'DRIVER.BLOCK_RESPONSIBLE_USER' | translate}}" value="{{ block.user }}">
       </mat-form-field>
       <!-- RESPONSIBLE USER -->
 
       <!-- START TIME -->
-      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+      <mat-form-field fxFlex="100" class="p-8">
         <input matInput readonly placeholder="{{'DRIVER.BLOCK_START_TIME' | translate}}" value="{{ block.startTime | date: 'dd/MM/y HH:mm:ss' }}">
       </mat-form-field>
       <!-- START TIME -->
 
       <!-- END TIME -->
-      <mat-form-field fxFlex.gt-xs="50" fxFlex="100" class="p-8">
+      <mat-form-field fxFlex="100" class="p-8">
           <input *ngIf="block.endTime" matInput readonly placeholder="{{'DRIVER.BLOCK_END_TIME' | translate}}" value="{{ block.endTime | date: 'dd/MM/y HH:mm:ss' }}">
           <input *ngIf="!block.endTime" matInput readonly placeholder="{{'DRIVER.BLOCK_END_TIME' | translate}}" value="{{ 'undefined' | translate }}">
       </mat-form-field>

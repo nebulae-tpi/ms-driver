@@ -40,7 +40,8 @@ import {
   MatSort,
   MatTableDataSource,
   MatSnackBar,
-  MatDialog
+  MatDialog,
+  MatDialogConfig
 } from '@angular/material';
 
 //////////// i18n ////////////
@@ -251,16 +252,19 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
 
 
   createBlock(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      mode: 'NEW',
+      forbidddenBlockKeys: this.dataSource.data.map((e: any) => e.key )
+    };
+    dialogConfig.minWidth = '350px';
+    dialogConfig.minHeight = '500px';
+    dialogConfig.maxWidth = '500px';
+    dialogConfig.maxHeight = '600px';
+
     return this.dialog
       // Opens confirm dialog
-      .open(ManualBlockDialogComponent, {
-        width: '70%',
-        height: '80%',
-        data: {
-          mode: 'NEW',
-          forbidddenBlockKeys: this.dataSource.data.map((e: any) => e.key )
-        }
-      })
+      .open(ManualBlockDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(
         filter(okButton => okButton),
@@ -273,20 +277,19 @@ export class DriverBlocksComponent implements OnInit, OnDestroy {
   }
 
   showBlockInfo(block: any) {
-    console.log('SHOW BLOCK INFO', block);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { mode: 'VIEW', block: block };
+
+    dialogConfig.minWidth = '350px';
+    dialogConfig.minHeight = '500px';
+    dialogConfig.maxWidth = '500px';
+    dialogConfig.maxHeight = '600px';
+
     return this.dialog
-      .open(ManualBlockDialogComponent, {
-        width: '70%',
-        height: '80%',
-        data: {
-          mode: 'VIEW',
-          block: block
-        }
-      })
+      .open(ManualBlockDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(
         filter(okButton => okButton),
-        tap(response => console.log('DIALOG RESPONSE ===>', response)),
         mergeMap(r => this.DriverDetailservice.InsertDriverBlock$(this.driver._id, r)),
         takeUntil(this.ngUnsubscribe)
       )

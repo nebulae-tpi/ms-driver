@@ -22,10 +22,12 @@ export class ManualBlockDialogComponent implements OnInit {
 
   manualBlockForm: any;
   blockTypes = [
-    { key: 'BREACH_SERVICE', duration: 18000000 }, // FIVE HOURS
-    { key: 'BREACH_AGREEMENT', duration: undefined },
-    { key: 'DOORMAN_COMPLAINT', duration: 7200000 },
-    { key: 'OTHER', duration: undefined }
+    { key: 'BREACH_SERVICE', duration: 1000 * 60 * 60 * 24 }, // 24 HOURS
+    { key: 'BREACH_AGREEMENT', duration: 1000 * 60 * 60 * 5 },
+    { key: 'DOORMAN_COMPLAINT', duration: 1000 * 60 * 60 * 2 },
+    { key: 'BAD_DISCIPLINARY_BEHAVIOR_QR5', duration: 1000 * 60 * 60 * 6 },
+    { key: 'STOLEN_SERVICE', duration: 1000 * 60 * 60 * 6 },    
+    // { key: 'OTHER', duration: 1000 * 60 * 60 * 2 },
     // { key: 'NON_PAYMENT', duration: undefined },
   ];
   forbidddenBlockKeys = [];
@@ -51,9 +53,6 @@ export class ManualBlockDialogComponent implements OnInit {
   }
 
   validateBlock(control: AbstractControl) {
-
-    console.log('validateBlock-control', control.value);
-    console.log('validateBlock-forbidddenBlockKeys', this.forbidddenBlockKeys);
     if (control.value && this.forbidddenBlockKeys.includes(control.value.key)){
       return { blockExist: true };
     }
