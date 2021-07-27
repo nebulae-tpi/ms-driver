@@ -22,7 +22,6 @@ import { Subject, of} from 'rxjs';
 import {
   MatPaginator,
   MatSort,
-  MatTableDataSource,
   MatSnackBar
 } from '@angular/material';
 
