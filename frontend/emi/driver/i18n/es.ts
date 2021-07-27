@@ -67,6 +67,7 @@ export const locale = {
           DOORMAN_COMPLAINT: 'Queja del portero',
           BAD_DISCIPLINARY_BEHAVIOR_QR5: 'Mal Comportamiento (QR5)',
           STOLEN_SERVICE: 'Robo de Servicio',
+          MECHANICAL_PROBLEMS: 'Problemas mecánicos',
           OTHER: 'Otro'
         },
         BLOCK_COMMENT_REQUIRED: 'Comentario requerido',

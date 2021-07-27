@@ -26,7 +26,8 @@ export class ManualBlockDialogComponent implements OnInit {
     { key: 'BREACH_AGREEMENT', duration: 1000 * 60 * 60 * 5 },
     { key: 'DOORMAN_COMPLAINT', duration: 1000 * 60 * 60 * 2 },
     { key: 'BAD_DISCIPLINARY_BEHAVIOR_QR5', duration: 1000 * 60 * 60 * 6 },
-    { key: 'STOLEN_SERVICE', duration: 1000 * 60 * 60 * 6 },    
+    { key: 'STOLEN_SERVICE', duration: 1000 * 60 * 60 * 6 },   
+    { key: 'MECHANICAL_PROBLEMS', duration: 1000 * 60 * 60 * 1 }, 
     // { key: 'OTHER', duration: 1000 * 60 * 60 * 2 },
     // { key: 'NON_PAYMENT', duration: undefined },
   ];
