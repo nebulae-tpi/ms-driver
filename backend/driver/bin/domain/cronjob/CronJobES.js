@@ -1,11 +1,13 @@
 "use strict";
 
 const { of, forkJoin } = require("rxjs");
-const { mergeMap, delay, tap } = require("rxjs/operators");
+const { mergeMap, delay, tap, toArray } = require("rxjs/operators");
 const Event = require("@nebulae/event-store").Event;
 const eventSourcing = require("../../tools/EventSourcing")();
 const MATERIALIZED_VIEW_TOPIC = "emi-gateway-materialized-view-updates";
 const DriverBlocksDA = require('../../data/DriverBlocksDA');
+const DriverCodeDA = require('../../data/DriverCodeDA');
+const DriverDA = require('../../data/DriverDA');
 
 /**
  * Singleton instance
@@ -29,6 +31,26 @@ class CronJobES {
     handlePeriodicFiveMinutes$() {
     return forkJoin(
       this.searchExpiredBlocksToRemove$()
+    )
+  }
+
+  handleAssignDriverCode$({data}) {
+    return DriverDA.getDriverListByBusinessId$(data.businessId).pipe(
+      mergeMap(driver => {
+        return DriverCodeDA.incrementAndGet$(data.businessId).pipe(
+          mergeMap(result => {
+            return  eventSourcing.eventStore.emitEvent$(new Event({
+              eventType: "DriverCodeAdded",
+              eventTypeVersion: 1,
+              aggregateType: "Driver",
+              aggregateId: driver._id,
+              data: {driverCode: result.seq},
+              user: "SYSTEM"
+            }));
+          })
+        )
+      }),
+      toArray()
     )
   }
 

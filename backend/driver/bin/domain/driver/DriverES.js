@@ -4,6 +4,7 @@ const {of, forkJoin} = require("rxjs");
 const { tap, mergeMap, catchError, map, mapTo } = require('rxjs/operators');
 const broker = require("../../tools/broker/BrokerFactory")();
 const DriverDA = require('../../data/DriverDA');
+const DriverCodeDA = require('../../data/DriverCodeDA');
 const MATERIALIZED_VIEW_TOPIC = "emi-gateway-materialized-view-updates";
 const DriverBlocksDA = require('../../data/DriverBlocksDA');
 
@@ -24,7 +25,11 @@ class DriverES {
      */
     handleDriverCreated$(driverCreatedEvent) {  
         const driver = driverCreatedEvent.data;
-        return DriverDA.createDriver$(driver)
+        return DriverCodeDA.incrementAndGet$(driver.businessId).pipe(
+            mergeMap(result => {
+                return DriverDA.createDriver$({...driver, driverCode: result.seq})
+            })
+        )
         .pipe(
             mergeMap(result => broker.send$(MATERIALIZED_VIEW_TOPIC, `DriverDriverUpdatedSubscription`, result.ops[0]))
         );
@@ -51,6 +56,10 @@ class DriverES {
         .pipe(
             mergeMap(result => broker.send$(MATERIALIZED_VIEW_TOPIC, `DriverDriverUpdatedSubscription`, result))
         );
+    }
+
+    handleDriverCodeAdded$(DriverCodeAddedEvent) {          
+        return DriverDA.addDriverCode$(DriverCodeAddedEvent.aid, DriverCodeAddedEvent.data.driverCode);
     }
 
     /**

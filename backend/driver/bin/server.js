@@ -10,6 +10,7 @@ const mongoDB = require('./data/MongoDB').singleton();
 const KeycloakDA = require('./data/KeycloakDA').singleton();
 const DriverDA = require('./data/DriverDA');
 const DriverBlocksDA = require('./data/DriverBlocksDA');
+const DriverCodeDA = require('./data/DriverCodeDA');
 const graphQlService = require('./services/emi-gateway/GraphQlService')();
 const Rx = require('rxjs');
 
@@ -21,6 +22,7 @@ const start = () => {
         mongoDB.start$(),
         DriverDA.start$(),
         DriverBlocksDA.start$(),
+        DriverCodeDA.start$(),
         graphQlService.start$(),
         KeycloakDA.checkKeycloakToken$(), 
     ).subscribe(

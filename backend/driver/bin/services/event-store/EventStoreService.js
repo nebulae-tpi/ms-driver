@@ -126,6 +126,10 @@ class EventStoreService {
         fn: DriverES.handleDriverCreated$,
         obj: DriverES
       },
+      DriverCodeAdded: {
+        fn: DriverES.handleDriverCodeAdded$,
+        obj: DriverES
+      },
       DriverGeneralInfoUpdated: {
         fn: DriverES.handleDriverGeneralInfoUpdated$,
         obj: DriverES
@@ -157,6 +161,10 @@ class EventStoreService {
       // cronjob
       PeriodicFiveMinutes: {
         fn: CronJobES.handlePeriodicFiveMinutes$,
+        obj: CronJobES
+      },
+      AssignDriverCode: {
+        fn: CronJobES.handleAssignDriverCode$,
         obj: CronJobES
       },
 
@@ -200,8 +208,13 @@ class EventStoreService {
         aggregateType: "Driver",
         eventType: "DriverBlockAdded"
       },
+      {
+        aggregateType: "Driver",
+        eventType: "DriverCodeAdded"
+      },
       // cronjob
       { aggregateType: "Cronjob", eventType: "PeriodicFiveMinutes" },
+      { aggregateType: "Cronjob", eventType: "AssignDriverCode" },
     ]
   }
 }

@@ -46,6 +46,27 @@ class DriverDA {
     return defer(() => collection.findOne(query));
   }
 
+  static getDriverListByBusinessId$(businessId) {
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
+
+    const query = {businessId};
+    const cursor = collection
+      .find(query);     
+
+    return mongoDB.extractAllFromMongoCursor$(cursor);
+  }
+
+  static addDriverCode$(_id,driverCode) {
+    const collection = mongoDB.db.collection(COLLECTION_NAME);
+
+      return defer(() => collection.updateOne(
+        { _id },
+        {
+          $set: { driverCode }
+        } 
+      ))
+  }
+
   static getDriverList$(filter, pagination) {
     const collection = mongoDB.db.collection(COLLECTION_NAME);
 
