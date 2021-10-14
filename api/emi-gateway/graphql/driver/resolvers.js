@@ -1,4 +1,3 @@
-var dateFormat = require('dateformat');
 const withFilter = require("graphql-subscriptions").withFilter;
 const PubSub = require("graphql-subscriptions").PubSub;
 const pubsub = new PubSub();
@@ -30,7 +29,7 @@ function getResponseFromBackEnd$(response) {
 }
 
 function log(msg) {
-  console.log(`${dateFormat(new Date(), "HH:MM:ss:l")}: ${msg}`);
+  console.log(`: ${msg}`);
 }
 
 
