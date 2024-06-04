@@ -8,6 +8,7 @@ const DriverCodeDA = require('../../data/DriverCodeDA');
 const MATERIALIZED_VIEW_TOPIC = "emi-gateway-materialized-view-updates";
 const DriverBlocksDA = require('../../data/DriverBlocksDA');
 const eventSourcing = require("../../tools/EventSourcing")();
+const Event = require("@nebulae/event-store").Event;
 
 /**
  * Singleton instance
