@@ -7,6 +7,7 @@ const DriverDA = require('../../data/DriverDA');
 const DriverCodeDA = require('../../data/DriverCodeDA');
 const MATERIALIZED_VIEW_TOPIC = "emi-gateway-materialized-view-updates";
 const DriverBlocksDA = require('../../data/DriverBlocksDA');
+const eventSourcing = require("../../tools/EventSourcing")();
 
 /**
  * Singleton instance
@@ -27,11 +28,21 @@ class DriverES {
         const driver = driverCreatedEvent.data;
         return DriverCodeDA.incrementAndGet$(driver.businessId).pipe(
             mergeMap(result => {
-                return DriverDA.createDriver$({...driver, driverCode: result.seq})
+                return forkJoin(
+                    eventSourcing.eventStore.emitEvent$(new Event({
+                        eventType: "DriverCodeAdded",
+                        eventTypeVersion: 1,
+                        aggregateType: "Driver",
+                        aggregateId: driver._id,
+                        data: {driverCode: result.seq},
+                        user: "SYSTEM"
+                      })),
+                    DriverDA.createDriver$({...driver, driverCode: result.seq})
+                )
             })
         )
         .pipe(
-            mergeMap(result => broker.send$(MATERIALIZED_VIEW_TOPIC, `DriverDriverUpdatedSubscription`, result.ops[0]))
+            mergeMap(([emitResult, result]) => broker.send$(MATERIALIZED_VIEW_TOPIC, `DriverDriverUpdatedSubscription`, result.ops[0]))
         );
     }
 
